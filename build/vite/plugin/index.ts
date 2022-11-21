@@ -79,12 +79,12 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean) {
     vitePlugins.push(configPwaConfig(viteEnv));
   }
 
-  vitePlugins.push(
-    Components({
-      dts: true,
-      resolvers: [AntDesignVueResolver()],
-    }),
-  );
+  // vitePlugins.push(
+  //   Components({
+  //     dts: true,
+  //     resolvers: [AntDesignVueResolver()],
+  //   }),
+  // );
 
   return vitePlugins;
 }

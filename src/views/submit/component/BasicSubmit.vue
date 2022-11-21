@@ -1,7 +1,7 @@
 <template>
   <div>{{ question.order }}. {{ question.name }}</div>
   <div>{{ question.description }}</div>
-  <div v-if="question.type === Question.SINGLE_FILE_ATTACHMENT">
+  <div v-if="question.type === Question.FILE_ATTACHMENT">
     <FileAttachment disabled="true" />
   </div>
   <div v-else-if="question.type === 'TextInput'">

@@ -21,6 +21,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'vue/no-mutating-props': 'off',
     'vue/script-setup-uses-vars': 'warn',
     '@typescript-eslint/ban-ts-ignore': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

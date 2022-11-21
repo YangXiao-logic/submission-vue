@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     AppSearchFooter: typeof import('./src/components/Application/src/search/AppSearchFooter.vue')['default']
     AppSearchKeyItem: typeof import('./src/components/Application/src/search/AppSearchKeyItem.vue')['default']
     AppSearchModal: typeof import('./src/components/Application/src/search/AppSearchModal.vue')['default']
+    ARadio: typeof import('ant-design-vue/es')['Radio']
     ARow: typeof import('ant-design-vue/es')['Row']
     ASelect: typeof import('ant-design-vue/es')['Select']
     ASelectOption: typeof import('ant-design-vue/es')['SelectOption']

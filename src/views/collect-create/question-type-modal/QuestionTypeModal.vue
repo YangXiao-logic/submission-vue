@@ -52,7 +52,7 @@
     },
     {
       name: '文件附件',
-      type: Question.SINGLE_FILE_ATTACHMENT,
+      type: Question.FILE_ATTACHMENT,
     },
     {
       name: '单选题',
