@@ -48,7 +48,7 @@ export function useTableFooter(
           footerBodyDom.scrollLeft = bodyDom.scrollLeft;
         },
         wait: 0,
-        options: true,
+        optionList: true,
       });
     });
   }

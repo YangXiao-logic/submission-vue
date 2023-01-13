@@ -8,7 +8,7 @@ export const step1Schemas: FormSchema[] = [
     required: true,
     defaultValue: '1',
     componentProps: {
-      options: [
+      optionList: [
         {
           label: 'anncwb@126.com',
           value: '1',

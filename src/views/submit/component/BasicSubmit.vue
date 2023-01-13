@@ -1,5 +1,5 @@
 <template>
-  <div>{{ question.order }}. {{ question.name }}</div>
+  <div>{{ question.questionOrder }}. {{ question.name }}</div>
   <div>{{ question.description }}</div>
   <div v-if="question.type === Question.FILE_ATTACHMENT">
     <FileAttachment disabled="true" />

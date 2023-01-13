@@ -90,7 +90,7 @@ export const schemas: FormSchema[] = [
       extra: '客户、邀评人默认被分享',
     },
     componentProps: {
-      options: [
+      optionList: [
         {
           label: '公开',
           value: '1',
@@ -119,7 +119,7 @@ export const schemas: FormSchema[] = [
     componentProps: {
       placeholder: '公开给',
       mode: 'multiple',
-      options: [
+      optionList: [
         {
           label: '同事1',
           value: '1',

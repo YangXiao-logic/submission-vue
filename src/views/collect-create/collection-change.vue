@@ -1,14 +1,14 @@
 <template>
   <PageWrapper>
     <a-button @click="logForm">测试</a-button>
-    <a-form :model="collectForm" style="display: flex; justify-content: center">
+    <a-form :model="collectionForm" style="display: flex; justify-content: center">
       <a-space direction="vertical" style="width: 70%" class="content">
         <a-form-item>
           <!--                     :rules="[{ required: true, message: 'Please input your username!' }]"-->
           <a-input
             required="true"
             class="question_form__name"
-            v-model:value="collectForm.title"
+            v-model:value="collectionForm.title"
             :bordered="false"
             placeholder="收集题目"
             style="font-size: 40px; text-align: center"
@@ -21,7 +21,7 @@
               :rules="[{ required: true, message: 'Please input collector name!' }]"
             >
               <a-input
-                v-model:value="collectForm.collectorName"
+                v-model:value="collectionForm.collectorName"
                 placeholder="负责人"
                 :bordered="false"
               />
@@ -30,7 +30,7 @@
           <a-col :span="9">
             <a-form-item label="发布时间" required>
               <a-date-picker
-                v-model:value="collectForm.releaseTime"
+                v-model:value="collectionForm.releaseTime"
                 show-time
                 placeholder="发布时间"
               />
@@ -39,7 +39,7 @@
           <a-col :span="9">
             <a-form-item label="截止时间" required>
               <a-date-picker
-                v-model:value="collectForm.closeTime"
+                v-model:value="collectionForm.closeTime"
                 show-time
                 placeholder="截止时间"
               />
@@ -49,7 +49,7 @@
         <a-form-item style="padding: 15px">
           <a-typography-title :level="4">描述</a-typography-title>
           <a-textarea
-            v-model:value="collectForm.description"
+            v-model:value="collectionForm.description"
             placeholder="描述收集"
             :rows="5"
             allow-clear
@@ -57,39 +57,8 @@
           <!--          <Tinymce class="question_form" v-model="collectForm.description" />-->
         </a-form-item>
 
-        <!--        <a-row>-->
-        <!--          <a-col v-for="question in collectForm.questionList" :order="question.order" :span="24">-->
-        <!--            <BasicQuestion-->
-        <!--              class="question_form"-->
-        <!--              :question="question"-->
-        <!--              @switch_order="switchOrder"-->
-        <!--              :questionLen="collectForm.questionList.length"-->
-        <!--            />-->
-        <!--          </a-col>-->
-        <!--        </a-row>-->
-        <!--        <draggable-->
-        <!--          v-model="collectForm.questionList"-->
-        <!--          tag="ul"-->
-        <!--          v-bind="{-->
-        <!--            animation: 200,-->
-        <!--            group: 'description',-->
-        <!--            disabled: false,-->
-        <!--            ghostClass: 'ghost',-->
-        <!--          }"-->
-        <!--        >-->
-        <!--          &lt;!&ndash;          <template #item="{ element }">&ndash;&gt;-->
-        <!--                              <BasicQuestion-->
-        <!--                                class="question_form"-->
-        <!--                                :question="element"-->
-        <!--                                :questionLen="collectForm.questionList.length"-->
-        <!--                              />-->
-        <!--          <li v-for="element in collectForm.questionList" :key="element.order">{{-->
-        <!--            element.name-->
-        <!--          }}</li>-->
-        <!--          &lt;!&ndash;          </template>&ndash;&gt;-->
-        <!--        </draggable>-->
         <draggable
-          v-model="collectForm.questionList"
+          v-model="collectionForm.questionList"
           @start="drag = true"
           @end="drag = false"
           item-key="order"
@@ -117,7 +86,7 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { provide, reactive, ref } from 'vue';
+  import { provide, reactive, ref, defineProps } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import BasicQuestion from './question/BasicQuestion.vue';
   import AButton from '/@/components/Button/src/BasicButton.vue';
@@ -125,44 +94,19 @@
   import QuestionTypeModal from '/@/views/collect-create/question-type-modal/QuestionTypeModal.vue';
   import { Question } from '/@/views/collect-create/question/question-type/Question';
   import Draggable from 'vuedraggable';
+  import { NameRuleType } from '/@/views/collect-create/question/question-type/NameRuleType';
 
-  const collectForm = reactive({
-    title: '收集标题',
-    collectorName: '负责人',
-    releaseTime: '',
-    closeTime: '',
-    description: '',
-    questionList: [
-      {
-        order: 1,
-        name: '姓名',
-        description: '',
-        type: Question.SIMPLE_TEXT_INPUT,
-        questionData: {},
-      },
-      {
-        order: 2,
-        name: '文件',
-        description: '',
-        type: Question.FILE_ATTACHMENT,
-        questionData: {},
-      },
-      {
-        order: 3,
-        name: '多选',
-        description: '',
-        type: Question.SINGLE_OPTION,
-        questionData: {
-          options: ['option1', 'option2'],
-        },
-      },
-    ],
+  const props = defineProps({
+    collectionForm: Object,
   });
 
+  const collectionForm = props.collectionForm;
+  console.log(collectionForm);
+  console.log(collectionForm.questionList);
   const drag = ref(false);
 
   const logForm = () => {
-    console.log(collectForm.questionList);
+    console.log(collectionForm.questionList);
   };
 
   // const questionNum = collectForm.value.questionList.length;
@@ -170,23 +114,22 @@
 
   const sortQuestion = () => {
     // collectForm.questionList.sort((a, b) => a.order - b.order);
-    collectForm.questionList = collectForm.questionList.map((item, index) => {
-      item.order = index + 1;
+    collectionForm.questionList = collectionForm.questionList.map((item, index) => {
+      item.questionOrder = index + 1;
       return item;
     });
   };
   const addQuestion = (questionType) => {
-    collectForm.questionList.push({
-      order: collectForm.questionList.length + 1,
+    collectionForm.questionList.push({
+      questionOrder: collectionForm.questionList.length + 1,
       name: '',
       description: '',
       type: questionType,
-      questionData: {},
     });
-    console.log(collectForm.questionList.length);
+    console.log(collectionForm.questionList.length);
   };
   const questionNameList = reactive(
-    collectForm.questionList
+    collectionForm.questionList
       .filter((item) => {
         return (
           item.type == Question.SINGLE_OPTION ||
@@ -202,7 +145,7 @@
 
   async function addCollect() {
     try {
-      await createCollect(collectForm);
+      await createCollect(collectionForm);
     } catch (error) {
       console.log(error);
     }

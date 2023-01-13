@@ -1,13 +1,12 @@
 import type { AppRouteModule } from '/@/router/types';
 
 import { LAYOUT } from '/@/router/constant';
-import { t } from '/@/hooks/web/useI18n';
 
 const collectDetail: AppRouteModule = {
-  path: '/collect',
+  path: '/collection-detail',
   name: 'CollectDetail',
   component: LAYOUT,
-  redirect: '/collect/detail',
+  redirect: '/collect-detail/detail',
   meta: {
     hideChildrenInMenu: true,
     icon: 'simple-icons:about-dot-me',

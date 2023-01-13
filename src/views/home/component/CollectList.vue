@@ -1,10 +1,15 @@
 <template>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1500, y: 300 }">
-    <template #bodyCell="{ column }">
+    <template #bodyCell="{ column, text, record }">
       <template v-if="column.key === 'operation'">
-        <a class="action-button">分享</a>
-        <a class="action-button">编辑</a>
+        <button @click="test(record)">record</button>
+        <button @click="test(text)">text</button>
         <a class="action-button">统计详情</a>
+        <router-link
+          :to="{ name: 'CollectEditPage', params: { collectionId: record.collectionId } }"
+          ><a class="action-button">编辑</a></router-link
+        >
+        <a class="action-button">分享</a>
         <a-popover trigger="hover">
           <template #content>
             <a class="omit-action">复制收集</a>
@@ -20,9 +25,13 @@
 
 <script setup lang="ts">
   import type { TableColumnsType } from 'ant-design-vue';
-  import {defineComponent, onMounted, reactive, ref, onBeforeMount} from 'vue';
+  import { defineComponent, onMounted, reactive, ref, onBeforeMount } from 'vue';
   import { SvgIcon } from '/@/components/Icon';
   import { listCollect } from '/@/api/collect/collect';
+
+  const test = (info) => {
+    console.log(info);
+  };
 
   const columns: TableColumnsType = [
     { title: '收集标题', width: 100, dataIndex: 'title', key: 'title', fixed: 'left' },
@@ -45,6 +54,7 @@
   ];
 
   interface DataItem {
+    collectionId: string;
     key: number;
     title: string;
     collectorName: string;
@@ -52,40 +62,23 @@
   }
 
   let data: DataItem[] = reactive([]);
-  // for (let i = 0; i < 100; i++) {
-  //   data.push({
-  //     key: i,
-  //     title: `Edrward ${i}`,
-  //     collectorName: 32,
-  //     // address: `London Park no. ${i}`,
-  //   });
-  // }
-  console.log(data);
+
   async function getCollectList() {
     await listCollect().then(function (response) {
       for (let i = 0; i < response.length; i++) {
         data.push({
           key: i,
+          collectionId: response[i].collectionId,
           title: response[i].title,
           // response[i].collectorName
-          collectorName: '负责人',
+          collectorName: response[i].collectorName,
         });
       }
     });
-    // console.log(resdata);
-    // var d;
-    // for (let i = 0; i < 5; i++) {
-    //   data.push({
-    //     key: i,
-    //     title: resdata[d].title,
-    //     collectorName: 'resdata[d].collectorName',
-    //   });
-    // }
     console.log('data');
     console.log(data);
   }
   getCollectList();
-
 </script>
 
 <style scoped>

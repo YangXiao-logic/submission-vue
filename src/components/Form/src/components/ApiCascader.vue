@@ -186,7 +186,7 @@
 
       return {
         state,
-        options,
+        options: optionList,
         loading,
         t,
         handleChange,

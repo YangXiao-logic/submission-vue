@@ -68,7 +68,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [
+      optionList: [
         { label: '启用', value: '0' },
         { label: '停用', value: '1' },
       ],
@@ -84,7 +84,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
+      optionList: [
         { label: '目录', value: '0' },
         { label: '菜单', value: '1' },
         { label: '按钮', value: '2' },
@@ -152,7 +152,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
+      optionList: [
         { label: '启用', value: '0' },
         { label: '禁用', value: '1' },
       ],
@@ -164,7 +164,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
+      optionList: [
         { label: '否', value: '0' },
         { label: '是', value: '1' },
       ],
@@ -178,7 +178,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
+      optionList: [
         { label: '否', value: '0' },
         { label: '是', value: '1' },
       ],
@@ -192,7 +192,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
+      optionList: [
         { label: '是', value: '0' },
         { label: '否', value: '1' },
       ],

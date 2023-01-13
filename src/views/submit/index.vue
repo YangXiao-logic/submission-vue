@@ -14,7 +14,7 @@
       </a-row>
       <a-form :model="answerForm">
         <a-row>
-          <a-col v-for="question in answerForm" :order="question.order" :span="24">
+          <a-col v-for="question in answerForm" :order="question.questionOrder" :span="24">
             <BasicSubmit class="question_form" :question="question" />
           </a-col>
         </a-row>
@@ -70,7 +70,7 @@
   };
 
   interface Answer {
-    order: number;
+    questionOrder: number;
     name: string;
     description: string;
     type: string;

@@ -37,7 +37,7 @@
       defaultValue: 'xlsx',
       rules: [{ required: true }],
       componentProps: {
-        options: [
+        optionList: [
           {
             label: 'xlsx',
             value: 'xlsx',

@@ -204,7 +204,7 @@
         span: 8,
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             label: '选项1',
             value: '1',
@@ -226,7 +226,7 @@
         span: 8,
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             label: '选项1',
             value: '1',
@@ -246,7 +246,7 @@
         span: 8,
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             label: '选项1',
             value: '1',
@@ -283,7 +283,7 @@
         span: 8,
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             label: '选项1',
             value: '1',
@@ -303,7 +303,7 @@
         span: 8,
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             value: 'zhejiang',
             label: 'Zhejiang',
@@ -515,7 +515,7 @@
             updateSchema({
               field: 'city',
               componentProps: {
-                options: citiesOptions,
+                optionList: citiesOptions,
               },
             });
           },
@@ -530,7 +530,7 @@
         span: 8,
       },
       componentProps: {
-        options: [], // defalut []
+        optionList: [], // defalut []
         placeholder: '省份与城市联动',
       },
     },

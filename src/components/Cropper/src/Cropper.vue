@@ -54,7 +54,7 @@
       default: undefined,
     },
     imageStyle: { type: Object as PropType<CSSProperties>, default: () => ({}) },
-    options: { type: Object as PropType<Options>, default: () => ({}) },
+    optionList: { type: Object as PropType<Options>, default: () => ({}) },
   };
 
   export default defineComponent({
@@ -118,7 +118,7 @@
           cropmove() {
             debounceRealTimeCroppered();
           },
-          ...props.options,
+          ...props.optionList,
         });
       }
 

@@ -82,7 +82,7 @@
           show.value = true;
         }, 300);
       }
-      return { options, value, start, show };
+      return { options: optionList, value, start, show };
     },
   });
 </script>

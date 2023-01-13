@@ -74,7 +74,7 @@
   import { useAppStore } from '/@/store/modules/app';
 
   const tinymceProps = {
-    options: {
+    optionList: {
       type: Object as PropType<Partial<RawEditorSettings>>,
       default: {},
     },

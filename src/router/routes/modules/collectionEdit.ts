@@ -3,24 +3,25 @@ import type { AppRouteModule } from '/@/router/types';
 import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
-const collectCreate: AppRouteModule = {
-  path: '/collect',
-  name: 'CollectCreate',
+const collectionEdit: AppRouteModule = {
+  path: '/collection-edit',
+  name: 'CollectionEdit',
   component: LAYOUT,
-  redirect: '/collect/create',
+  redirect: '/collection-edit/edit',
   meta: {
+    hideMenu: true,
     hideChildrenInMenu: true,
     icon: 'simple-icons:about-dot-me',
-    title: t('routes.collect.create'),
+    title: '修改收集',
     orderNo: 1,
   },
   children: [
     {
-      path: 'create',
-      name: 'CollectCreatePage',
-      component: () => import('/@/views/collect-create/index.vue'),
+      path: 'edit/:collectionId',
+      name: 'CollectEditPage',
+      component: () => import('/@/views/collect-create/collection-edit/index.vue'),
       meta: {
-        title: t('routes.collect.create'),
+        title: '修改收集',
         icon: 'simple-icons:about-dot-me',
         hideMenu: true,
       },
@@ -28,4 +29,4 @@ const collectCreate: AppRouteModule = {
   ],
 };
 
-export default collectCreate;
+export default collectionEdit;

@@ -30,7 +30,7 @@
       value: {
         type: [String, Number, Boolean] as PropType<string | number | boolean>,
       },
-      options: {
+      optionList: {
         type: Array as PropType<RadioItem[]>,
         default: () => [],
       },

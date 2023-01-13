@@ -73,5 +73,8 @@ module.exports = {
       },
     ],
     'vue/multi-word-component-names': 'off',
+
+    'no-restricted-imports': 'off',
+
   },
 };

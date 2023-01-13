@@ -1,16 +1,16 @@
 <template>
-  <div style="display: flex" v-for="(option, idx) in options">
+  <div style="display: flex" v-for="(option, idx) in optionList">
     <minus-circle-outlined
       style="font-size: 16px; align-self: center"
-      @click="options.splice(idx)"
+      @click="optionList.splice(idx)"
     />
     <a-input
       style="display: inline-block; width: 95%; float: right; margin: 10px"
       placeholder="填入选项内容"
-      v-model:value="options[idx]"
+      v-model:value="optionList[idx]"
     />
   </div>
-  <a-button @click="options.push('')"
+  <a-button @click="optionList.push('')"
     ><template #icon><plus-circle-outlined /></template>添加选项</a-button
   >
 </template>
@@ -24,7 +24,7 @@
   } from '@ant-design/icons-vue';
 
   defineProps({
-    options: Array,
+    optionList: Array,
   });
 </script>
 

@@ -14,10 +14,9 @@ export function createCollect(params, mode: ErrorMessageMode = 'modal') {
   );
 }
 
-export function getCollect(collectId) {
+export function getCollect(params) {
   return defHttp.get({
-    url: '/collect/collect',
-    params: collectId,
+    url: '/collect/collect?collectionId=' + params,
   });
 }
 

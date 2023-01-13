@@ -38,7 +38,7 @@
       initValue: {
         type: [String, Number] as PropType<string | number>,
       },
-      options: {
+      optionList: {
         type: Array as PropType<LabelValueOptions>,
         default: () => [],
       },

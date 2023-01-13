@@ -47,7 +47,7 @@ export const schemas: FormSchema[] = [
     component: 'Select',
     label: '仓库管理员',
     componentProps: {
-      options: basicOptions,
+      optionList: basicOptions,
     },
     required: true,
     colProps: {
@@ -59,7 +59,7 @@ export const schemas: FormSchema[] = [
     component: 'Select',
     label: '审批人',
     componentProps: {
-      options: basicOptions,
+      optionList: basicOptions,
     },
     required: true,
   },
@@ -77,7 +77,7 @@ export const schemas: FormSchema[] = [
     component: 'Select',
     label: '仓库类型',
     componentProps: {
-      options: storeTypeOptions,
+      optionList: storeTypeOptions,
     },
     required: true,
     colProps: {
@@ -106,7 +106,7 @@ export const taskSchemas: FormSchema[] = [
     component: 'Select',
     label: '执行人',
     componentProps: {
-      options: basicOptions,
+      optionList: basicOptions,
     },
     required: true,
     colProps: {
@@ -118,7 +118,7 @@ export const taskSchemas: FormSchema[] = [
     component: 'Select',
     label: '责任人',
     componentProps: {
-      options: basicOptions,
+      optionList: basicOptions,
     },
     required: true,
   },
@@ -139,7 +139,7 @@ export const taskSchemas: FormSchema[] = [
     component: 'Select',
     label: '任务类型',
     componentProps: {
-      options: storeTypeOptions,
+      optionList: storeTypeOptions,
     },
     required: true,
     colProps: {

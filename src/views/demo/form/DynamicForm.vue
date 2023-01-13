@@ -66,7 +66,7 @@
         return values.field8 ? [{ required: true, message: '字段4必填' }] : [];
       },
       componentProps: {
-        options: [
+        optionList: [
           {
             label: '选项1',
             value: '1',

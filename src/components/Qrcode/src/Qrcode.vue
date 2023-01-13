@@ -18,7 +18,7 @@
         default: null,
       },
       // 参数
-      options: {
+      optionList: {
         type: Object as PropType<QRCodeRenderersOptions>,
         default: null,
       },
@@ -56,7 +56,7 @@
               width,
               logo: logo as any,
               content: renderValue,
-              options: options || {},
+              optionList: options || {},
             });
             emit('done', { url, ctx: (wrapEl as HTMLCanvasElement).getContext('2d') });
             return;

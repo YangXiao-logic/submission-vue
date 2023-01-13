@@ -2,7 +2,7 @@
   <div style="margin-bottom: 20px"
     ><span>文件将被重新命名为格式: </span>
     <div style="display: inline-block">
-      <div v-for="rule in fileNameRule" style="display: inline-block">
+      <div v-for="rule in fileNameRuleList" style="display: inline-block">
         <span v-if="rule.type === NameRuleType.QUESTION" style="background-color: #e3e4ec">{{
           rule.label
         }}</span>
@@ -10,12 +10,7 @@
         <span>+</span>
       </div>
     </div>
-    <a-input
-      style="width: 20%"
-      v-if="show"
-      v-model:value="inputValue"
-      @keyup.enter="addRuleText"
-    />
+    <a-input style="width: 20%" v-if="show" v-model:value="inputValue" @keyup.enter="addRuleText" />
     <a-select
       style="width: 20%; float: right"
       v-model:value="optionValue"
@@ -56,6 +51,7 @@
   import { message } from 'ant-design-vue';
   import { defineComponent, inject, ref } from 'vue';
   import type { UploadChangeParam } from 'ant-design-vue';
+  import { NameRuleType } from '/@/views/collect-create/question/question-type/NameRuleType';
 
   const handleChange = (info: UploadChangeParam) => {
     const status = info.file.status;
@@ -69,29 +65,28 @@
     }
   };
   const fileList = ref([]);
+  defineProps({
+    fileNameRuleList: Array,
+  });
 
   const handleDrop = (e: DragEvent) => {
     console.log(e);
   };
-  enum NameRuleType {
-    QUESTION = 'question',
-    TEXT = 'text',
-  }
 
-  const fileNameRule = ref([
-    {
-      type: NameRuleType.QUESTION,
-      label: '姓名',
-    },
-    {
-      type: NameRuleType.QUESTION,
-      label: '学号',
-    },
-    {
-      type: NameRuleType.TEXT,
-      label: '操作系统作业',
-    },
-  ]);
+  // const fileNameRuleList = ref([
+  //   {
+  //     type: NameRuleType.QUESTION,
+  //     label: '姓名',
+  //   },
+  //   {
+  //     type: NameRuleType.QUESTION,
+  //     label: '学号',
+  //   },
+  //   {
+  //     type: NameRuleType.TEXT,
+  //     label: '操作系统作业',
+  //   },
+  // ]);
 
   const questionNameList = inject('questionNameList', [
     {
@@ -105,13 +100,13 @@
   };
 
   const addRuleText = () => {
-    fileNameRule.value.push({ type: NameRuleType.TEXT, label: inputValue.value });
+    fileNameRuleList.value.push({ type: NameRuleType.TEXT, label: inputValue.value });
     show.value = false;
-    console.log(fileNameRule);
+    console.log(fileNameRuleList);
   };
 
   const addRuleOption = () => {
-    fileNameRule.value.push({ type: NameRuleType.QUESTION, label: optionValue.value });
+    fileNameRuleList.value.push({ type: NameRuleType.QUESTION, label: optionValue.value });
   };
 
   const optionValue = ref('');

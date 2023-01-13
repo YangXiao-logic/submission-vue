@@ -26,13 +26,13 @@ eslint-disable vue/no-mutating-props
       <!--      <div>{{ question.description }}</div>-->
       <!--    </div>-->
       <div v-if="question.type === Question.FILE_ATTACHMENT">
-        <SingleFileAttachment disabled="true" />
+        <SingleFileAttachment disabled="true" :fileNameRuleList="question.fileNameRuleList" />
       </div>
       <div v-else-if="question.type === Question.SIMPLE_TEXT_INPUT">
         <a-input :disabled="true" placeholder="此处用户填入" />
       </div>
       <div v-else-if="question.type === Question.SINGLE_OPTION">
-        <OptionQuestion :options="question.questionData.options" />
+        <OptionQuestion :optionList="question.optionList" />
       </div>
     </a-col>
     <!--    <a-col :span="2">-->
@@ -55,8 +55,6 @@ eslint-disable vue/no-mutating-props
       required: true,
     },
   });
-
-
 </script>
 
 <style scoped></style>

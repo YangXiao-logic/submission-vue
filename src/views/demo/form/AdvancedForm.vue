@@ -55,7 +55,7 @@
           span: 8,
         },
         componentProps: {
-          options: [
+          optionList: [
             {
               label: '选项1',
               value: '1',
@@ -77,7 +77,7 @@
           span: 8,
         },
         componentProps: {
-          options: [
+          optionList: [
             {
               label: '选项1',
               value: '1',
