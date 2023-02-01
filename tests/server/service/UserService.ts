@@ -2,11 +2,11 @@ import { Result } from '../utils';
 
 const fakeUserInfo = {
   userId: '1',
-  username: 'vben',
+  account: 'vben',
   realName: 'Vben Admin',
   desc: 'manager',
   password: '123456',
-  token: 'fakeToken1',
+  tokenValue: 'fakeToken1',
   roles: [
     {
       roleName: 'Super Admin',

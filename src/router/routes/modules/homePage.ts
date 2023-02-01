@@ -18,7 +18,7 @@ const collect: AppRouteModule = {
     {
       path: 'index',
       name: 'HomePageIndex',
-      component: () => import('/@/views/home/index.vue'),
+      component: () => import('/@/views/home-page/index.vue'),
       meta: {
         title: '首页',
         icon: 'simple-icons:about-dot-me',

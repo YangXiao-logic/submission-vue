@@ -18,7 +18,7 @@ const collectionCreate: AppRouteModule = {
     {
       path: 'create',
       name: 'CollectCreatePage',
-      component: () => import('/@/views/collect-create/collection-create.vue'),
+      component: () => import('/@/views/collection-create/index.vue'),
       meta: {
         title: t('routes.collect.create'),
         icon: 'simple-icons:about-dot-me',

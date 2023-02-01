@@ -35,7 +35,7 @@
   import { ref, computed } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import { Tinymce } from '/@/components/Tinymce';
-  import BasicQuestion from '/@/views/collect-create/question/BasicQuestion.vue';
+  import BasicQuestion from '/@/views/collection-create/question/BasicQuestion.vue';
   import AButton from '/@/components/Button/src/BasicButton.vue';
 
   import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
@@ -79,7 +79,6 @@
   }
 
   const answerForm = ref<Answer[]>(collectData.questionList as any);
-
 </script>
 
 <style scoped lang="less">

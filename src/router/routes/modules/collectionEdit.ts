@@ -19,7 +19,7 @@ const collectionEdit: AppRouteModule = {
     {
       path: 'edit/:collectionId',
       name: 'CollectEditPage',
-      component: () => import('/@/views/collect-create/collection-edit/index.vue'),
+      component: () => import('/@/views/collection-edit/index.vue'),
       meta: {
         title: '修改收集',
         icon: 'simple-icons:about-dot-me',

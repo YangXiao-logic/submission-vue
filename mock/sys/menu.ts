@@ -245,7 +245,7 @@ export default [
       if (!token) {
         return resultError('Invalid token!');
       }
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => item.tokenValue === token);
       if (!checkUser) {
         return resultError('Invalid user token!');
       }

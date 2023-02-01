@@ -5,12 +5,12 @@ export function createFakeUserList() {
   return [
     {
       userId: '1',
-      username: 'vben',
+      account: '17338676735',
       realName: 'Vben Admin',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
       desc: 'manager',
       password: '123456',
-      token: 'fakeToken1',
+      tokenValue: 'fakeToken1',
       homePath: '/dashboard/analysis',
       roles: [
         {
@@ -21,12 +21,12 @@ export function createFakeUserList() {
     },
     {
       userId: '2',
-      username: 'test',
+      account: 'test',
       password: '123456',
       realName: 'test user',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=339449197&s=640',
       desc: 'tester',
-      token: 'fakeToken2',
+      tokenValue: 'fakeToken2',
       homePath: '/dashboard/workbench',
       roles: [
         {
@@ -46,23 +46,23 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/basic-api/login',
+    url: '/basic-api/auth/customer/login',
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
-      const { username, password } = body;
+      const { account, password } = body;
       const checkUser = createFakeUserList().find(
-        (item) => item.username === username && password === item.password,
+        (item) => item.account === account && password === item.password,
       );
       if (!checkUser) {
         return resultError('Incorrect account or password！');
       }
-      const { userId, username: _username, token, realName, desc, roles } = checkUser;
+      const { userId, account: _username, tokenValue, realName, desc, roles } = checkUser;
       return resultSuccess({
         roles,
         userId,
-        username: _username,
-        token,
+        account: _username,
+        tokenValue: tokenValue,
         realName,
         desc,
       });
@@ -74,7 +74,7 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => item.tokenValue === token);
       if (!checkUser) {
         return resultError('The corresponding user information was not obtained!');
       }
@@ -88,7 +88,7 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => item.tokenValue === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }
@@ -104,7 +104,7 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => item.tokenValue === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }

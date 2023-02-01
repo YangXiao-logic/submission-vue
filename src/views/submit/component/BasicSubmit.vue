@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-  import FileAttachment from '/@/views/collect-create/question/SingleFileAttachment.vue';
-  import { Question } from '/@/views/collect-create/question/type/Question';
+  import FileAttachment from '/@/views/collection-create/question/SingleFileAttachment.vue';
+  import { Question } from '/@/views/collection-create/question/type/Question';
 
   const props = defineProps({
     question: Object,
