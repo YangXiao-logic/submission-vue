@@ -4,13 +4,22 @@
       <div style="text-align: left; font-size: large; margin-bottom: 10px">创建收集</div>
       <a-row :gutter="12">
         <a-col :span="8">
-          <CreateCard title="文件收集" />
+          <CreateCard
+            :title="t('view.home.create.file')"
+            :description="t('view.home.create.fileDescription')"
+          />
         </a-col>
         <a-col :span="8">
-          <CreateCard title="问卷收集" />
+          <CreateCard
+            :title="t('view.home.create.paper')"
+            :description="t('view.home.create.questionnaireDescription')"
+          />
         </a-col>
         <a-col :span="8">
-          <CreateCard title="试卷收集" />
+          <CreateCard
+            :title="t('view.home.create.paper')"
+            description="t('view.home.create.paperDescription')"
+          />
         </a-col>
       </a-row>
     </div>
@@ -25,7 +34,10 @@
   import { PageWrapper } from '/@/components/Page';
   import { SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons-vue';
   import CollectList from '/@/views/home-page/component/CollectionList.vue';
-  import CreateCard from '/@/views/home-page/component/CreateCard.vue';
+  import CreateCard from '/@/views/home-page/component/CollectionCreateCard.vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 </script>
 
 <style scoped lang="less">

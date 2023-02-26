@@ -1,8 +1,8 @@
 <template>
-  <a-table :columns="columns" :data-source="data" :scroll="{ x: 1500, y: 300 }">
-    <template #bodyCell="{ column }">
+  <a-table :columns="columns" :data-source="submissionList" :scroll="{ x: 1500, y: 300 }">
+    <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'operation'">
-        <RecordDetail :submitId="data.key" />
+        <RecordDetail :submissionId="record.submissionId" />
       </template>
     </template>
   </a-table>
@@ -27,24 +27,24 @@
   ];
 
   interface DataItem {
-    key: number;
+    submissionId: number;
     name: string;
     fileNum: number;
     submitTime: string;
   }
 
   const submissionList = ref([] as DataItem[]);
-  for (let i = 0; i < 100; i++) {
-    submissionList.value.push({
-      key: i,
-      name: `Edrward ${i}`,
-      fileNum: 2,
-      submitTime: `London Park no. ${i}`,
-    });
-  }
   const collectionId = useRoute().params.collectionId;
   const getSubmissionList = async () => {
-    submissionList.value = await getSubmissionListApi(collectionId);
+    const response = await getSubmissionListApi(collectionId);
+    for (let i = 0; i < response.length; i++) {
+      submissionList.value.push({
+        submissionId: response[i].submissionId,
+        name: `Edrward ${i}`,
+        fileNum: 2,
+        submitTime: `London Park no. ${i}`,
+      });
+    }
   };
   getSubmissionList();
 </script>

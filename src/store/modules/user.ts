@@ -31,7 +31,7 @@ export const useUserStore = defineStore({
     // user info
     userInfo: null,
     // token
-    tokenValue: undefined,
+    token: undefined,
     // roleList
     roleList: [],
     // Whether the login expired
@@ -44,7 +44,7 @@ export const useUserStore = defineStore({
       return this.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
     },
     getToken(): string {
-      return this.tokenValue || getAuthCache<string>(TOKEN_KEY);
+      return this.token || getAuthCache<string>(TOKEN_KEY);
     },
     getRoleList(): RoleEnum[] {
       return this.roleList.length > 0 ? this.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);

@@ -12,7 +12,7 @@
         </a-col>
         <a-col :span="8" :class="`${prefixCls}__top-col`">
           <div>截止倒计时</div>
-          <p>{{ countDown }}天</p>
+          <p>{{ collectionDetail.countDown }}天</p>
         </a-col>
       </a-row>
     </div>
@@ -20,7 +20,10 @@
     <div :class="`${prefixCls}__content`">
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="应交名单">
-          <name-list :collectionId="collectionId" />
+          <name-list
+            :nameList="collectionDetail.nameList"
+            :remainNameList="collectionDetail.remainNameList"
+          />
         </a-tab-pane>
         <a-tab-pane key="2" tab="提交记录" force-render>
           <submit-record />
@@ -30,14 +33,18 @@
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { reactive, ref } from 'vue';
   import { PageWrapper } from '/@/components/Page';
   import NameList from '/@/views/collection-detail/component/NameList.vue';
   import SubmitRecord from '/@/views/collection-detail/component/SubmissionList.vue';
-  import { getCollectionApi, getNameListApi } from '/@/api/collection/collection';
+  import {
+    getCollectionApi,
+    getCollectionDetailApi,
+    getNameListApi,
+  } from '/@/api/collection/collection';
   import { useRoute } from 'vue-router';
-  import { Question } from '/@/views/collection-create/question/question-type/Question';
-  import { NameRuleType } from '/@/views/collection-create/question/question-type/NameRuleType';
+  import { QuestionType } from '/@/views/question/question-type/QuestionType';
+  import { FileRenamePattern } from '/@/views/question/question-type/FileRenamePattern';
   import dayjs from 'dayjs';
 
   const prefixCls = 'list-basic';
@@ -47,19 +54,19 @@
   const collectionDetail = ref({
     collectionId: '0',
     title: '收集标题',
-    releaseTime: '2022-1-1 01:01:01',
-    closeTime: '2022-1-3 01:01:01',
+    countDown: 3,
     submissionCount: 1,
     fileCount: 2,
+    nameList: [],
+    remainNameList: [],
   });
   async function getCollectionDetail() {
     console.log(route.params.collectionId);
-    collectionDetail.value = await getCollectionApi(collectionId);
+    collectionDetail.value = await getCollectionDetailApi(collectionId);
   }
 
   getCollectionDetail();
 
-  const countDown = dayjs().diff(dayjs(collectionDetail.value.closeTime), 'day');
   // console.log(route.params.collectionId);
   // const collectionId = route.params.collectionId;
   // const data = await getCollection(1);

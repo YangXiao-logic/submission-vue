@@ -1,4 +1,4 @@
-export enum NameRuleType {
+export enum FileRenamePattern {
   QUESTION = 'question',
   TEXT = 'text',
 }

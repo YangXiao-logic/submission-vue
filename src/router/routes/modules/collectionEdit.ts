@@ -24,6 +24,7 @@ const collectionEdit: AppRouteModule = {
         title: '修改收集',
         icon: 'simple-icons:about-dot-me',
         hideMenu: true,
+        carryParam: true,
       },
     },
   ],

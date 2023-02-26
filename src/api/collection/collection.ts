@@ -1,10 +1,10 @@
 import { defHttp } from '/@/utils/http/axios';
 import { ErrorMessageMode } from '/#/axios';
 
-export function createCollect(params, mode: ErrorMessageMode = 'modal') {
+export function createCollectionApi(params, mode: ErrorMessageMode = 'modal') {
   return defHttp.post(
     {
-      url: '/collect/collect',
+      url: '/collections',
       params,
     },
     {
@@ -16,7 +16,7 @@ export function createCollect(params, mode: ErrorMessageMode = 'modal') {
 
 export function getCollectionApi(params) {
   return defHttp.get({
-    url: '/collection?collectionId=' + params,
+    url: '/collections/' + params,
   });
 }
 
@@ -26,21 +26,68 @@ export function getCollectionListApi() {
   });
 }
 
-export function getNameListApi(params) {
+export function stopCollectionApi(collectionId) {
+  return defHttp.post(
+    {
+      url: '/collections/' + collectionId + '/stop',
+    },
+    {
+      successMessageMode: 'modal',
+    },
+  );
+}
+
+export function updateCollectionApi(params, collectionId) {
+  return defHttp.put(
+    {
+      url: '/collections/' + collectionId,
+      params,
+    },
+    {
+      successMessageMode: 'modal',
+    },
+  );
+}
+
+export function deleteCollectionApi(collectionId) {
+  return defHttp.delete(
+    {
+      url: '/collections/' + collectionId,
+    },
+    {
+      successMessageMode: 'modal',
+    },
+  );
+}
+
+export function getCollectionDetailApi(collectionId) {
   return defHttp.get({
-    url: '/collections/name-list?collectionId=' + params,
+    url: '/collections/' + collectionId + '/detail',
   });
 }
 
-export function getRemainNameListApi(params) {
+export function getNameListApi(collectionId) {
   return defHttp.get({
-    url: '/collections/remain-name-list?collectionId=' + params,
+    url: '/collections/' + collectionId + '/names',
   });
 }
 
-export function putNameListApi(collectionId, params) {
-  return defHttp.put({
-    url: '/collections/name-list?collectionId=' + collectionId,
+export function getRemainNameListApi(collectionId) {
+  return defHttp.get({
+    url: '/collections/' + collectionId + '/remain-names',
+  });
+}
+
+export function addNameListApi(collectionId, params) {
+  return defHttp.post({
+    url: '/collections/' + collectionId + '/name-list',
     params: params,
+  });
+}
+
+export function addNameApi(collectionId, nameId) {
+  return defHttp.post({
+    url: '/collections/' + collectionId + '/name-list',
+    params: nameId,
   });
 }

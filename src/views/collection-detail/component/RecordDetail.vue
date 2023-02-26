@@ -7,7 +7,10 @@
         <div class="record">
           <SvgIcon name="questionnaire" />
           <div>问卷</div>
-          <QuestionnairePreview style="position: absolute; right: 5px" />
+          <QuestionnairePreview
+            style="position: absolute; right: 5px"
+            :submissionId="submissionId"
+          />
         </div>
         <div class="record">
           <SvgIcon name="file" />
@@ -35,7 +38,7 @@
   import QuestionnairePreview from '/@/views/collection-detail/component/QuestionnairePreview.vue';
 
   const props = defineProps({
-    submitId: String,
+    submissionId: String,
   });
   const visible = ref<boolean>(false);
 
@@ -51,7 +54,7 @@
 
 <style scoped lang="less">
   .record {
-    background-color: @second-1-color;
+    background-color: @secondary-gray-color;
     position: relative;
     margin: 8px;
     padding: 8px;

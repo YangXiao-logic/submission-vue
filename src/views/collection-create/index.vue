@@ -1,16 +1,32 @@
 <template>
-  <CollectionEdit :collectionForm="collectForm" />
+  <CollectionEdit :collectionForm="collectionForm">
+    <a-divider />
+    <a-row :gutter="20" justify="end">
+      <a-col :span="4">
+        <a-form-item>
+          <a-button @click="addCollection" style="width: 100%" type="primary">创建</a-button>
+        </a-form-item>
+      </a-col>
+      <a-col :span="4">
+        <a-button style="width: 100%" type="primary">预览</a-button>
+      </a-col>
+    </a-row>
+  </CollectionEdit>
 </template>
 
 <script setup lang="ts">
-  import CollectionEdit from '/@/views/collection-create/collection-change.vue';
-  import { reactive } from 'vue';
-  import { Question } from '/@/views/collection-create/question/question-type/Question';
-  import { NameRuleType } from '/@/views/collection-create/question/question-type/NameRuleType';
+  import CollectionEdit from '/@/views/collection-create/component/CollectionChange.vue';
+  import { reactive, ref, watch } from 'vue';
+  import { QuestionType } from '/@/views/question/question-type/QuestionType';
+  import { FileRenamePattern } from '/@/views/question/question-type/FileRenamePattern';
   import { formatToDateTime } from '/@/utils/dateUtil';
   import dayjs from 'dayjs';
+  import { createCollectionApi } from '/@/api/collection/collection';
+  import { buildShortUUID } from '/@/utils/uuid';
 
-  const collectForm = reactive({
+  const nameQuestionId = buildShortUUID();
+
+  const collectionForm = ref({
     title: '收集标题',
     collectorName: '负责人',
     releaseTime: dayjs(),
@@ -18,40 +34,36 @@
     description: '',
     questionList: [
       {
+        tempQuestionId: nameQuestionId,
         questionOrder: 1,
         name: '姓名',
         description: '',
-        type: Question.SIMPLE_TEXT_INPUT,
+        type: QuestionType.NAME,
+        required: true,
       },
       {
         questionOrder: 2,
         name: '文件',
         description: '',
-        type: Question.FILE_ATTACHMENT,
-        fileNameRuleList: [
+        type: QuestionType.FILE_ATTACHMENT,
+        required: false,
+        fileRenamePatternList: [
           {
-            type: NameRuleType.QUESTION,
-            label: '姓名',
-          },
-          {
-            type: NameRuleType.QUESTION,
-            label: '学号',
-          },
-          {
-            type: NameRuleType.TEXT,
-            label: '操作系统作业',
+            tempQuestionId: nameQuestionId,
+            order: 1,
           },
         ],
       },
-      {
-        questionOrder: 3,
-        name: '单选',
-        description: '',
-        type: Question.SINGLE_OPTION,
-        optionList: ['option1', 'option2'],
-      },
     ],
   });
+
+  async function addCollection() {
+    try {
+      await createCollectionApi(collectionForm.value);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 </script>
 
 <style scoped></style>

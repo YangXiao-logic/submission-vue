@@ -7,12 +7,12 @@ enum Api {
 
 export function getSubmissionListApi(collectionId) {
   return defHttp.get({
-    url: Api.GetSubmissionList + '?collectionId=' + collectionId,
+    url: '/collections/' + collectionId + '/submissions',
   });
 }
 
-export function getSubmissionApi(submissionId) {
+export function getSubmissionAnswerApi(submissionId) {
   return defHttp.get({
-    url: Api.GetSubmission + '?submissionId=' + submissionId,
+    url: '/collections/' + '/submissions/' + submissionId,
   });
 }

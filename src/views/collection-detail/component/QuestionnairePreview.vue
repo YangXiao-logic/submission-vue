@@ -4,8 +4,8 @@
     <a-modal centered v-model:visible="visible" @ok="handleOk">
       <div style="padding: 20px">
         <div style="padding: 5px" v-for="answer in answerList">
-          <div style="margin-bottom: 3px; font-size: medium">{{ answer.question }}</div>
-          <div v-for="answerInfo in answer.answerList">
+          <div style="margin-bottom: 3px; font-size: medium">{{ answer.questionName }}</div>
+          <div v-for="answerInfo in answer.answerContent">
             <div> >{{ answerInfo }}</div>
           </div>
           <a-divider />
@@ -19,9 +19,10 @@
   import { ref } from 'vue';
   import { SvgIcon } from '/@/components/Icon';
   import { CaretDownOutlined } from '@ant-design/icons-vue';
+  import { getSubmissionAnswerApi } from '/@/api/collection/submission';
 
   const props = defineProps({
-    submitId: String,
+    submissionId: String,
   });
   const visible = ref<boolean>(false);
 
@@ -33,17 +34,11 @@
     console.log(e);
     visible.value = false;
   };
-
-  const answerList = [
-    {
-      question: '姓名',
-      answerList: ['测3'],
-    },
-    {
-      question: '问题1',
-      answerList: ['文件1', '文件2'],
-    },
-  ];
+  const answerList = ref([]);
+  async function getAnswer() {
+    answerList.value = await getSubmissionAnswerApi(props.submissionId);
+  }
+  getAnswer();
 </script>
 
 <style scoped></style>

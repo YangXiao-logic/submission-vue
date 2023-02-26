@@ -22,26 +22,15 @@
 <script lang="ts" setup>
   import { PlusOutlined } from '@ant-design/icons-vue';
   import { defineProps, ref, watch } from 'vue';
-  import {
-    getNameListApi,
-    getRemainNameListApi,
-    putNameListApi,
-  } from '/@/api/collection/collection';
+  import { getNameListApi, getRemainNameListApi } from '/@/api/collection/collection';
   const visible = ref(false);
   const newName = ref('名称1 名称2 名称3');
   const props = defineProps({
-    collectionId: String,
+    nameList: Array,
+    remainNameList: Array,
   });
   const nameList = ref([] as any[]);
   const remainNameList = ref([] as any[]);
-  async function getNameList() {
-    nameList.value = await getNameListApi(props.collectionId);
-  }
-  getNameList();
-  async function getRemainNameList() {
-    remainNameList.value = await getRemainNameListApi(props.collectionId);
-  }
-  getRemainNameList();
 
   function addName(index: any) {
     nameList.value.push(remainNameList.value.at(index));
@@ -49,31 +38,31 @@
   }
 
   const addNameList = (e: MouseEvent) => {
-    const newNameList = newName.value.split(' ');
+    const newNameList = newName.value.split('\n');
     nameList.value = nameList.value.concat(newNameList);
     newName.value = '';
     visible.value = false;
   };
 
-  watch(
-    () => nameList.value,
-    async (nameListValue) => {
-      await putNameListApi(props.collectionId, nameListValue);
-    },
-  );
+  // watch(
+  //   () => nameList.value,
+  //   async (nameListValue) => {
+  //     await putNameListApi(props.collectionId, nameListValue);
+  //   },
+  // );
 </script>
 
 <style scoped lang="less">
   .name_col {
     text-align: center;
     padding: 3px;
-    background-color: @second-1-color;
+    background-color: @secondary-gray-color;
     width: 100%;
   }
   .add_name_col {
     text-align: center;
     padding: 3px;
-    background-color: @second-1-color;
+    background-color: @secondary-gray-color;
     width: 100%;
   }
 </style>

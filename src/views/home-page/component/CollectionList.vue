@@ -5,36 +5,65 @@
         <router-link
           :to="{ name: 'CollectionDetailPage', params: { collectionId: record.collectionId } }"
         >
-          <a class="action-button">统计详情</a>
+          <a class="action-button">{{ t('view.home.list.detail') }}</a>
         </router-link>
         <router-link
           :to="{ name: 'CollectEditPage', params: { collectionId: record.collectionId } }"
-          ><a class="action-button">编辑</a></router-link
+          ><a class="action-button">{{ t('view.home.list.edit') }}</a></router-link
         >
-        <a class="action-button">分享</a>
+        <a
+          class="action-button"
+          @click="
+            modalCollectionId = record.collectionId;
+            visible = true;
+          "
+          >分享</a
+        >
         <a-popover trigger="hover">
           <template #content>
-            <a class="omit-action">复制收集</a>
-            <a class="omit-action">停止收集</a>
-            <a class="omit-action">删除收集</a>
+            <a class="omit-action" @click="stopCollection(record.collectionId)">停止收集</a>
+            <a
+              class="omit-action"
+              @click="
+                deleteModalCollectionId = record.collectionId;
+                deleteVisible = true;
+              "
+              >删除收集</a
+            >
           </template>
           <SvgIcon name="omit" />
         </a-popover>
       </template>
+      <template v-else-if="column.key === 'state'">
+        <div v-if="record.state === 1"> 正在收集 </div>
+        <div v-else-if="record.state === 0"> 已截止 </div>
+      </template>
     </template>
   </a-table>
+  <ShareModal :collectionId="modalCollectionId" :visible="visible" />
+  <DeleteModal
+    :collectionId="deleteModalCollectionId"
+    :visible="deleteVisible"
+    :reloadCollectionList="getCollectionList"
+  />
 </template>
 
 <script setup lang="ts">
   import type { TableColumnsType } from 'ant-design-vue';
   import { defineComponent, onMounted, reactive, ref, onBeforeMount } from 'vue';
   import { SvgIcon } from '/@/components/Icon';
-  import { getCollectionListApi } from '/@/api/collection/collection';
+  import { getCollectionListApi, stopCollectionApi } from '/@/api/collection/collection';
+  import ShareModal from '/@/views/home-page/component/ShareModal.vue';
+  import Modal from '/@/components/Modal/src/components/Modal';
+  import DeleteModal from '/@/views/home-page/component/DeleteModal.vue';
 
-  const test = (info) => {
-    console.log(info);
-  };
+  const modalCollectionId = ref();
+  const visible = ref(false);
+  const deleteModalCollectionId = ref();
+  const deleteVisible = ref(false);
+  import { useI18n } from '/@/hooks/web/useI18n';
 
+  const { t } = useI18n();
   const columns: TableColumnsType = [
     { title: '收集标题', width: 100, dataIndex: 'title', key: 'title', fixed: 'left' },
     {
@@ -43,44 +72,37 @@
       dataIndex: 'collectorName',
       key: 'collectorName',
     },
-    // { title: '收集状态', dataIndex: 'address', key: '1', width: 150 },
-    // { title: '提交人数', dataIndex: 'address', key: '2', width: 150 },
-    // { title: '截止时间', dataIndex: 'address', key: '3', width: 150 },
+    { title: '收集状态', dataIndex: 'state', key: 'state', width: 50 },
+    { title: '提交人数', dataIndex: 'submissionCount', key: 'submissionCount', width: 50 },
+    { title: '截止时间', dataIndex: 'closeTime', key: 'closeTime', width: 50 },
     {
-      title: '文件详情',
+      title: '操作',
       key: 'operation',
       width: 150,
     },
   ];
 
-  interface DataItem {
-    collectionId: string;
-    key: number;
-    title: string;
-    collectorName: string;
-    // address: string;
-  }
+  // interface DataItem {
+  //   collectionId: string;
+  //   // key: number;
+  //   title: string;
+  //   collectorName: string;
+  //   // address: string;
+  // }
 
-  let data: DataItem[] = reactive([]);
+  const data = ref();
 
   async function getCollectionList() {
-    await getCollectionListApi().then(function (response) {
-      console.log(response);
-      console.log(response.length);
-      for (let i = 0; i < response.length; i++) {
-        data.push({
-          key: i,
-          collectionId: response[i].collectionId,
-          title: response[i].title,
-          // response[i].collectorName
-          collectorName: response[i].collectorName,
-        });
-      }
-    });
+    data.value = await getCollectionListApi();
     console.log('data');
     console.log(data);
   }
   getCollectionList();
+
+  async function stopCollection(collectionId) {
+    await stopCollectionApi(collectionId);
+    await getCollectionList();
+  }
 </script>
 
 <style scoped>

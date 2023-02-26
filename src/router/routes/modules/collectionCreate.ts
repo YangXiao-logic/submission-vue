@@ -11,7 +11,7 @@ const collectionCreate: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     icon: 'simple-icons:about-dot-me',
-    title: t('routes.collect.create'),
+    title: t('routes.collection.create'),
     orderNo: 1,
   },
   children: [
@@ -20,7 +20,7 @@ const collectionCreate: AppRouteModule = {
       name: 'CollectCreatePage',
       component: () => import('/@/views/collection-create/index.vue'),
       meta: {
-        title: t('routes.collect.create'),
+        title: t('routes.collection.create'),
         icon: 'simple-icons:about-dot-me',
         hideMenu: true,
       },

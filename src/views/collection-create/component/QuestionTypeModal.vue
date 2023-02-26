@@ -1,7 +1,7 @@
 <template>
   <a-button type="dashed" block @click="showModal">
     <PlusOutlined />
-    Add Question
+    Add QuestionType
   </a-button>
   <a-modal
     centered
@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
   import { defineComponent, ref } from 'vue';
-  import { Question } from '/@/views/collection-create/question/question-type/Question';
+  import { QuestionType } from '/@/views/question/question-type/QuestionType';
   const emits = defineEmits(['addQuestion']);
   const visible = ref<boolean>(false);
   const showModal = () => {
@@ -39,28 +39,28 @@
   };
   const questionTypeList = [
     {
-      name: '标识类问题',
-      type: Question.IDENTIFY,
+      name: '智能名单',
+      type: QuestionType.NAME,
     },
     {
       name: '简单问答题',
-      type: Question.SIMPLE_TEXT_INPUT,
+      type: QuestionType.SIMPLE_TEXT_INPUT,
     },
     {
       name: '富文本类问答题',
-      type: Question.RICH_TEXT_INPUT,
+      type: QuestionType.RICH_TEXT_INPUT,
     },
     {
       name: '文件附件',
-      type: Question.FILE_ATTACHMENT,
+      type: QuestionType.FILE_ATTACHMENT,
     },
     {
       name: '单选题',
-      type: Question.SINGLE_OPTION,
+      type: QuestionType.SINGLE_CHOICE,
     },
     {
       name: '多选题',
-      type: Question.MULTIPLY_OPTION,
+      type: QuestionType.MULTIPLY_CHOICE,
     },
   ];
 </script>

@@ -1,6 +1,5 @@
 <template>
   <PageWrapper>
-    <a-button @click="logForm">测试</a-button>
     <a-form :model="collectionForm" style="display: flex; justify-content: center">
       <a-space direction="vertical" style="width: 70%" class="content">
         <a-form-item>
@@ -65,91 +64,94 @@
           @change="sortQuestion"
         >
           <template #item="{ element }">
-            <BasicQuestion class="question_form" :question="element" />
+            <BasicQuestion
+              class="question_form"
+              :question="element"
+              @delete-question="deleteQuestion(element.questionOrder)"
+              @copy-question="copyQuestion(element.questionOrder)"
+            />
           </template>
         </draggable>
         <question-type-modal @add-question="addQuestion" />
-
-        <a-divider />
-        <a-row :gutter="20" justify="end">
-          <a-col :span="4">
-            <a-form-item>
-              <a-button @click="addCollect" style="width: 100%" type="primary">创建</a-button>
-            </a-form-item>
-          </a-col>
-          <a-col :span="4">
-            <a-button style="width: 100%" type="primary">预览</a-button>
-          </a-col>
-        </a-row>
+        <slot></slot>
       </a-space>
     </a-form>
   </PageWrapper>
 </template>
 <script lang="ts" setup>
-  import { provide, reactive, ref, defineProps } from 'vue';
+  import { provide, reactive, ref, defineProps, unref, isRef, watch, computed } from 'vue';
   import { PageWrapper } from '/@/components/Page';
-  import BasicQuestion from './question/BasicQuestion.vue';
+  import BasicQuestion from '/@/views/question/collection/BasicQuestion.vue';
   import AButton from '/@/components/Button/src/BasicButton.vue';
-  import { createCollect } from '/@/api/collection/collection';
-  import QuestionTypeModal from '/@/views/collection-create/question-type-modal/QuestionTypeModal.vue';
-  import { Question } from '/@/views/collection-create/question/question-type/Question';
+  import { createCollectionApi, getCollectionApi } from '/@/api/collection/collection';
+  import QuestionTypeModal from '/@/views/collection-create/component/QuestionTypeModal.vue';
+  import { QuestionType } from '/@/views/question/question-type/QuestionType';
   import Draggable from 'vuedraggable';
-  import { NameRuleType } from '/@/views/collection-create/question/question-type/NameRuleType';
+  import { FileRenamePattern } from '/@/views/question/question-type/FileRenamePattern';
+  import { useRoute } from 'vue-router';
+  import dayjs from 'dayjs';
+  import { buildShortUUID } from '/@/utils/uuid';
 
   const props = defineProps({
-    collectionForm: Object,
+    collectionForm: {
+      type: Object,
+      required: true,
+    },
   });
-
-  const collectionForm = props.collectionForm;
-  console.log(collectionForm);
-  console.log(collectionForm.questionList);
   const drag = ref(false);
 
-  const logForm = () => {
-    console.log(collectionForm.questionList);
+  const deleteQuestion = (questionOrder) => {
+    props.collectionForm.questionList.splice(questionOrder - 1, 1);
+    sortQuestion();
   };
 
-  // const questionNum = collectForm.value.questionList.length;
-  const switchOrder = (order) => {};
+  const copyQuestion = (questionOrder) => {
+    const newQuestion = { ...props.collectionForm.questionList[questionOrder - 1] };
+    const ref1 = isRef(newQuestion);
+    newQuestion.questionOrder = questionOrder + 1;
+    props.collectionForm.questionList.splice(questionOrder, 0, newQuestion);
+    sortQuestion();
+  };
 
   const sortQuestion = () => {
-    // collectForm.questionList.sort((a, b) => a.order - b.order);
-    collectionForm.questionList = collectionForm.questionList.map((item, index) => {
+    props.collectionForm.questionList = props.collectionForm.questionList.map((item, index) => {
       item.questionOrder = index + 1;
       return item;
     });
   };
   const addQuestion = (questionType) => {
-    collectionForm.questionList.push({
-      questionOrder: collectionForm.questionList.length + 1,
+    const newQuestion = {
+      questionOrder: props.collectionForm.questionList.length + 1,
       name: '',
       description: '',
       type: questionType,
-    });
-    console.log(collectionForm.questionList.length);
+      optionList: [],
+      tempQuestionId: buildShortUUID(),
+    };
+    if (questionType.type === QuestionType.NAME) {
+      newQuestion.name = '姓名';
+    }
+    props.collectionForm.questionList.push(newQuestion);
+    console.log(props.collectionForm.questionList.length);
   };
-  const questionNameList = reactive(
-    collectionForm.questionList
+
+  const questionNameList = computed(() => {
+    return props.collectionForm.questionList
       .filter((item) => {
         return (
-          item.type == Question.SINGLE_OPTION ||
-          item.type == Question.SIMPLE_TEXT_INPUT ||
-          item.type == Question.MULTIPLY_OPTION
+          item.type == QuestionType.NAME ||
+          item.type == QuestionType.SINGLE_CHOICE ||
+          item.type == QuestionType.SIMPLE_TEXT_INPUT ||
+          item.type == QuestionType.MULTIPLY_CHOICE
         );
       })
       .map((item) => {
-        return { value: item.name, label: item.name };
-      }),
-  );
+        return { tempQuestionId: item.tempQuestionId, name: item.name };
+      });
+  });
   provide('questionNameList', questionNameList);
 
-  async function addCollect() {
-    try {
-      await createCollect(collectionForm);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // watch(props.collectionForm.questionList[])
 </script>
 
 <style scoped lang="less">
@@ -162,7 +164,7 @@
     padding: 10px;
     margin: 5px;
     border: solid 1px #1a1a1a;
-    border-radius: 20px;
+    border-radius: 10px;
     &__name {
       margin-bottom: 10px;
       height: 50px;

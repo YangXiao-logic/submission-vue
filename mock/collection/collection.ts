@@ -1,7 +1,7 @@
 import { MockMethod } from 'vite-plugin-mock';
 import { resultSuccess } from '../_util';
-import { Question } from '/@/views/collection-create/question/question-type/Question';
-import { NameRuleType } from '/@/views/collection-create/question/question-type/NameRuleType';
+import { QuestionType } from '/@/views/question/question-type/QuestionType';
+import { FileRenamePattern } from '/@/views/question/question-type/FileRenamePattern';
 
 const collectionList = [
   {

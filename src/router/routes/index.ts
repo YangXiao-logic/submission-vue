@@ -39,7 +39,7 @@ export const LoginRoute: AppRouteRecordRaw = {
 };
 
 export const SubmitRoute: AppRouteRecordRaw = {
-  path: '/submit/:collectId',
+  path: '/submit/:collectionId',
   name: 'SubmitPage',
   component: () => import('/@/views/submit/index.vue'),
   meta: {
