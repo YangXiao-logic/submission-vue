@@ -1,4 +1,5 @@
 export default {
   create: 'Create Collection',
-  list:'Collect List'
+  list: 'Collect List',
+  home: 'Home',
 };
