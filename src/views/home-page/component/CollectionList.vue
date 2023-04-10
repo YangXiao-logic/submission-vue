@@ -1,5 +1,10 @@
 <template>
-  <a-table :columns="columns" :data-source="data" :scroll="{ x: 1500, y: 300 }">
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :scroll="{ x: 1500, y: 500 }"
+    :pagination="{ pageSize: 8 }"
+  >
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'operation'">
         <router-link
@@ -17,26 +22,28 @@
             modalCollectionId = record.collectionId;
             visible = true;
           "
-          >分享</a
+          >{{ t('view.home.list.share') }}</a
         >
         <a-popover trigger="hover">
           <template #content>
-            <a class="omit-action" @click="stopCollection(record.collectionId)">停止收集</a>
+            <a class="omit-action" @click="stopCollection(record.collectionId)">{{
+              t('view.home.list.stop')
+            }}</a>
             <a
               class="omit-action"
               @click="
                 deleteModalCollectionId = record.collectionId;
                 deleteVisible = true;
               "
-              >删除收集</a
+              >{{ t('view.home.list.delete') }}</a
             >
           </template>
           <SvgIcon name="omit" />
         </a-popover>
       </template>
       <template v-else-if="column.key === 'state'">
-        <div v-if="record.state === 1"> 正在收集 </div>
-        <div v-else-if="record.state === 0"> 已截止 </div>
+        <div v-if="record.state === 1"> {{ t('view.home.list.collecting') }} </div>
+        <div v-else-if="record.state === 0"> {{ t('view.home.list.ending') }} </div>
       </template>
     </template>
   </a-table>
@@ -65,18 +72,34 @@
 
   const { t } = useI18n();
   const columns: TableColumnsType = [
-    { title: '收集标题', width: 100, dataIndex: 'title', key: 'title', fixed: 'left' },
     {
-      title: '收集者',
+      title: t('view.home.tableHead.title'),
+      width: 100,
+      dataIndex: 'title',
+      key: 'title',
+      fixed: 'left',
+    },
+    {
+      title: t('view.home.tableHead.collectorName'),
       width: 50,
       dataIndex: 'collectorName',
       key: 'collectorName',
     },
-    { title: '收集状态', dataIndex: 'state', key: 'state', width: 50 },
-    { title: '提交人数', dataIndex: 'submissionCount', key: 'submissionCount', width: 50 },
-    { title: '截止时间', dataIndex: 'closeTime', key: 'closeTime', width: 50 },
+    { title: t('view.home.tableHead.state'), dataIndex: 'state', key: 'state', width: 50 },
     {
-      title: '操作',
+      title: t('view.home.tableHead.submissionCount'),
+      dataIndex: 'submissionCount',
+      key: 'submissionCount',
+      width: 50,
+    },
+    {
+      title: t('view.home.tableHead.closeTime'),
+      dataIndex: 'closeTime',
+      key: 'closeTime',
+      width: 50,
+    },
+    {
+      title: t('view.home.tableHead.operation'),
       key: 'operation',
       width: 150,
     },

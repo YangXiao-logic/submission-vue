@@ -9,12 +9,12 @@
   <div>根据过往的收集记录，可能你会关注以下人员是否提交（点击添加到本次应交名单）</div>
   <a-row :gutter="[16, 16]">
     <a-col v-for="(item, index) in remainNameList" :xs="8" :sm="6" :md="6" :lg="4" :xl="4">
-      <div class="add_name_col" @click="addName(index)"><plus-outlined />{{ item }}</div>
+      <div class="add_name_col" @click="addRemainName(index)"><plus-outlined />{{ item }}</div>
     </a-col>
   </a-row>
   <a-modal v-model:visible="visible" title="添加姓名" @ok="addNameList">
     <div style="padding: 15px">
-      <a-textarea :rows="10" v-model:value="newName" allow-clear />
+      <a-textarea :rows="10" v-model:value="newNameString" allow-clear />
     </div>
   </a-modal>
 </template>
@@ -24,7 +24,7 @@
   import { defineProps, ref, watch } from 'vue';
   import { getNameListApi, getRemainNameListApi } from '/@/api/collection/collection';
   const visible = ref(false);
-  const newName = ref('名称1 名称2 名称3');
+  const newNameString = ref('名称1\n名称2\n名称3');
   const props = defineProps({
     nameList: Array,
     remainNameList: Array,
@@ -32,15 +32,15 @@
   const nameList = ref([] as any[]);
   const remainNameList = ref([] as any[]);
 
-  function addName(index: any) {
+  function addRemainName(index: any) {
     nameList.value.push(remainNameList.value.at(index));
     remainNameList.value.splice(index, 1);
   }
 
   const addNameList = (e: MouseEvent) => {
-    const newNameList = newName.value.split('\n');
+    const newNameList = newNameString.value.split('\n');
     nameList.value = nameList.value.concat(newNameList);
-    newName.value = '';
+    newNameString.value = '';
     visible.value = false;
   };
 

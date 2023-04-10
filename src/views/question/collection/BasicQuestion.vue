@@ -3,7 +3,7 @@
     <a-col :span="24">
       <a-tooltip
         v-if="question.type === QuestionType.NAME"
-        title="系统将依据“姓名”的题目，为您生成智能名单。"
+        :title="t('view.create.question.nameQuestionTooltip')"
         placement="topLeft"
         :get-popup-container="getPopupContainer"
       >
@@ -11,18 +11,25 @@
       </a-tooltip>
       <a-form-item
         :label="question.questionOrder"
-        :rules="[{ required: true, message: 'Please input question name!' }]"
+        :rules="rules"
+        :name="['questionList', 'name']"
+        :required="true"
         style="margin-bottom: 0px"
       >
         <div v-if="question.type === QuestionType.NAME">{{ question.name }}</div>
-        <a-input v-else v-model:value="question.name" :bordered="false" placeholder="请输入问题" />
+        <a-input
+          v-else
+          v-model:value="question.name"
+          :bordered="false"
+          :placeholder="t('view.create.question.questionNamePlaceholder')"
+        />
       </a-form-item>
       <!--    </div>-->
       <a-form-item style="margin-bottom: 0px">
         <a-input
           v-model:value="question.description"
           :bordered="false"
-          placeholder="添加题目描述"
+          :placeholder="t('view.create.question.questionDescriptionPlaceholder')"
         />
       </a-form-item>
       <div v-if="question.type === QuestionType.FILE_ATTACHMENT">
@@ -32,10 +39,10 @@
         />
       </div>
       <div v-else-if="question.type === QuestionType.SIMPLE_TEXT_INPUT">
-        <a-input :disabled="true" placeholder="此处用户填入" />
+        <a-input :disabled="true" :placeholder="t('view.create.question.userInput')" />
       </div>
       <div v-else-if="question.type === QuestionType.NAME">
-        <a-input :disabled="true" placeholder="此处用户填入" />
+        <a-input :disabled="true" :placeholder="t('view.create.question.userInput')" />
       </div>
       <div v-else-if="question.type === QuestionType.SINGLE_CHOICE">
         <OptionQuestion :optionList="question.optionList" />
@@ -44,15 +51,23 @@
         <OptionQuestion :optionList="question.optionList" />
       </div>
       <a-row justify="space-between" style="margin-top: 10px">
-        <a-col :span="6"><a-checkbox v-model:value="question.required">必选</a-checkbox></a-col>
+        <a-col :span="6"
+          ><a-checkbox v-model:checked="question.required">{{
+            t('view.create.question.required')
+          }}</a-checkbox></a-col
+        >
         <a-col
           ><span style="margin: 10px">
             <copy-outlined style="font-size: 1.3em" />
-            <a-button type="text" @click="$emit('copyQuestion')" style="">复制题目</a-button>
+            <a-button type="text" @click="$emit('copyQuestion')" style="">{{
+              t('view.create.question.copyQuestion')
+            }}</a-button>
           </span>
           <span>
             <delete-outlined style="font-size: 1.3em" />
-            <a-button type="text" @click="$emit('deleteQuestion')" style="">删除题目</a-button>
+            <a-button type="text" @click="$emit('deleteQuestion')" style="">{{
+              t('view.create.question.deleteQuestion')
+            }}</a-button>
           </span>
         </a-col>
       </a-row>
@@ -62,12 +77,16 @@
 
 <script setup lang="ts">
   import SingleFileAttachment from '/@/views/question/collection/question-content/SingleFileAttachment.vue';
-  import { inject, ref } from 'vue';
+  import { computed, inject, ref } from 'vue';
   import type { SelectProps } from 'ant-design-vue';
   import OptionQuestion from '/@/views/question/collection/question-content/OptionQuestion.vue';
   import { QuestionType } from '/@/views/question/question-type/QuestionType';
   import { QuestionCircleOutlined, CopyOutlined, DeleteOutlined } from '@ant-design/icons-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import Schema from 'async-validator';
+  import { Rule } from 'ant-design-vue/es/form';
 
+  const { t } = useI18n();
   defineProps({
     question: {
       type: Object,
@@ -77,9 +96,33 @@
     copyQuestion: Function,
   });
 
+  const descriptor = {};
+
   function getPopupContainer() {
     return document.body;
   }
+  const questionNameList = inject('questionNameList');
+
+  const nameDict = computed(() => {
+    const countMap: Record<string, number> = {};
+    questionNameList.value.forEach((item) => {
+      countMap[item.name] = countMap[item.name] ? countMap[item.name] + 1 : 1;
+    });
+    return countMap;
+  });
+
+  // Validate Rule: Question Name can not be equal.
+  let validateRepeat = async (_rule: Rule, value: string) => {
+    if (nameDict[value] && nameDict[value] >= 2) {
+      return Promise.reject('Each question must have a distinct title.');
+    } else {
+      return Promise.resolve();
+    }
+  };
+  const rules: Rule[] = [
+    { required: true, message: 'Please input question name!' },
+    { required: true, validator: validateRepeat, trigger: 'change' },
+  ];
 </script>
 
 <style scoped>

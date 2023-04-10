@@ -1,6 +1,6 @@
 <template>
   <a-row :gutter="20" justify="space-between">
-    <a-col :span="20">
+    <a-col :span="24">
       <div>
         <span>*</span>
         <span style="margin-right: 15px">{{ questionData.questionOrder }}:</span>
@@ -25,9 +25,17 @@
       <!--        />-->
       <!--      </a-form-item>-->
       <div v-if="questionData.type === QuestionType.FILE_ATTACHMENT">
-        <FileAttachment : />
+        <FileAttachment
+          :fileRenamePatternList="questionData.fileRenamePatternList"
+          :questionId="questionData.questionId"
+        />
       </div>
-      <div v-else-if="questionData.type === QuestionType.SIMPLE_TEXT_INPUT">
+      <div
+        v-else-if="
+          questionData.type === QuestionType.SIMPLE_TEXT_INPUT ||
+          questionData.type === QuestionType.NAME
+        "
+      >
         <a-input placeholder="请输入回答" v-model:value="answer.answerContent[0]" />
       </div>
       <div v-else-if="questionData.type === QuestionType.SINGLE_CHOICE">

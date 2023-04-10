@@ -27,7 +27,7 @@
             display: flex;
           "
         >
-          <div>{{ t('routes.collection.create') }}</div>
+          <div>{{ t('view.home.create.collection') }}</div>
         </div>
       </ScrollYTransition>
 
@@ -41,7 +41,9 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import { ScrollYTransition } from '/@/components/Transition';
-  import { t } from '/@/hooks/web/useI18n';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const props = defineProps({
     title: String,

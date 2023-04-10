@@ -3,11 +3,11 @@
     <div direction="vertical" style="width: 60%; position: relative" class="content">
       <div style="font-size: 40px; text-align: center">{{ collection.title }}</div>
       <div style="padding: 3%">{{ collection.description }}</div>
-      <a-row :gutter="20" justify="space-around">
-        <a-col :span="4">
+      <a-row :gutter="20" justify="space-between">
+        <a-col>
           <div class="border-class">收集者：{{ collection.collectorName }}</div>
         </a-col>
-        <a-col :span="8">
+        <a-col>
           <div class="border-class">截止时间：{{ collection.closeTime }}</div>
         </a-col>
       </a-row>
@@ -43,15 +43,12 @@
 </template>
 
 <script setup lang="ts">
-  import dayjs from 'dayjs';
-  import { defineAsyncComponent, onBeforeMount, provide, reactive, ref } from 'vue';
-
-  import { QuestionType } from '/@/views/question/question-type/QuestionType';
-  import { FileRenamePattern } from '/@/views/question/question-type/FileRenamePattern';
+  import { defineAsyncComponent, provide, ref } from 'vue';
   import { createSubmissionApi } from '/@/api/collection/submit';
   import { useRoute } from 'vue-router';
   import { getCollectionApi } from '/@/api/collection/collection';
-  import { Collection, Question } from '/#/collection';
+  import { Collection } from '/#/collection';
+  import { Answer } from '/#/submission';
 
   const BasicQuestion = defineAsyncComponent(
     () => import('/@/views/question/submission/BasicQuestion.vue'),
@@ -71,10 +68,6 @@
   const haveData = ref(false);
   // const collection = ref();
 
-  interface Answer {
-    questionId: string | undefined;
-    answerContent: string[];
-  }
   const route = useRoute();
   const collectionId = route.params.collectionId;
 
@@ -85,17 +78,18 @@
     //   collection.value = response;
     // });
     collection.value = await getCollectionApi(collectionId);
-    console.log(collection.value);
-    const answerList = collection.value.questionList.map((question) => {
+    submissionForm.value = collection.value.questionList.map((question) => {
       const answer: Answer = { questionId: question.questionId, answerContent: [''] };
       return answer;
     });
-    submissionForm.value = answerList;
     haveData.value = true;
   };
   getCollection();
-  console.log(submissionForm);
+  const shouldWait = ref(true);
+  provide('submissionForm', submissionForm);
+  provide('shouldWait', shouldWait);
   async function submit() {
+    shouldWait.value = false;
     await createSubmissionApi(collectionId, submissionForm.value);
   }
 </script>
@@ -125,7 +119,7 @@
   }
 
   .border-class {
-    border: 1px solid #1a1a1a;
-    border-radius: 5px;
+    //border: 1px solid #1a1a1a;
+    //border-radius: 5px;
   }
 </style>

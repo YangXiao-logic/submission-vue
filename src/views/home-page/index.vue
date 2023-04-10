@@ -1,7 +1,9 @@
 <template>
   <PageWrapper>
     <div class="top">
-      <div style="text-align: left; font-size: large; margin-bottom: 10px">创建收集</div>
+      <div style="text-align: left; font-size: large; margin-bottom: 10px">{{
+        t('view.home.create.collection')
+      }}</div>
       <a-row :gutter="12">
         <a-col :span="8">
           <CreateCard
@@ -11,21 +13,23 @@
         </a-col>
         <a-col :span="8">
           <CreateCard
-            :title="t('view.home.create.paper')"
+            :title="t('view.home.create.questionnaire')"
             :description="t('view.home.create.questionnaireDescription')"
           />
         </a-col>
         <a-col :span="8">
           <CreateCard
             :title="t('view.home.create.paper')"
-            description="t('view.home.create.paperDescription')"
+            :description="t('view.home.create.paperDescription')"
           />
         </a-col>
       </a-row>
     </div>
     <div class="content">
-      <div style="text-align: left; font-size: large; margin-bottom: 10px">收集记录</div>
-      <collect-list />
+      <div style="text-align: left; font-size: large; margin-bottom: 10px">{{
+        t('view.home.list.list')
+      }}</div>
+      <collect-list style="height: 1000px" />
     </div>
   </PageWrapper>
 </template>
