@@ -1,18 +1,37 @@
 <template>
-  <a-button style="margin-bottom: 20px" @click="visible = true">添加姓名</a-button>
+  <a-button style="margin-bottom: 20px" @click="visible = true">{{
+    t('view.detail.nameList.addName')
+  }}</a-button>
   <a-row :gutter="[16, 16]">
-    <a-col v-for="item in nameList" :xs="8" :sm="6" :md="4" :lg="3" :xl="2"
-      ><div class="name_col">{{ item }}</div></a-col
-    >
-  </a-row>
-  <a-divider />
-  <div>根据过往的收集记录，可能你会关注以下人员是否提交（点击添加到本次应交名单）</div>
-  <a-row :gutter="[16, 16]">
-    <a-col v-for="(item, index) in remainNameList" :xs="8" :sm="6" :md="6" :lg="4" :xl="4">
-      <div class="add_name_col" @click="addRemainName(index)"><plus-outlined />{{ item }}</div>
+    <a-col v-for="(item, index) in nameList" :md="4" :lg="3" :xl="2">
+      <!--      <div class="name_col">{{ item }}</div>-->
+      <!--      <a-button type="primary" shape="circle" icon="close" />-->
+      <a-button @click="$emit('deleteName', index)">
+        <span class="icon-wrapper">
+          <close-outlined />
+        </span>
+        {{ item }}
+      </a-button>
     </a-col>
   </a-row>
-  <a-modal v-model:visible="visible" title="添加姓名" @ok="addNameList">
+  <a-divider />
+  <div>{{ t('view.detail.nameList.followUpMessage') }}</div>
+  <a-row :gutter="[16, 16]">
+    <a-col v-for="(item, index) in remainNameList" :xs="8" :sm="6" :md="6" :lg="4" :xl="4">
+      <a-button class="add_name_col" @click="$emit('addRemainName', index)"
+        ><plus-outlined />{{ item }}</a-button
+      >
+    </a-col>
+  </a-row>
+
+  <a-modal
+    v-model:visible="visible"
+    :title="t('view.detail.nameList.addNameButton')"
+    @ok="
+      $emit('addNameList', newNameString);
+      visible = false;
+    "
+  >
     <div style="padding: 15px">
       <a-textarea :rows="10" v-model:value="newNameString" allow-clear />
     </div>
@@ -20,36 +39,20 @@
 </template>
 
 <script lang="ts" setup>
-  import { PlusOutlined } from '@ant-design/icons-vue';
+  import { PlusOutlined, CloseOutlined } from '@ant-design/icons-vue';
   import { defineProps, ref, watch } from 'vue';
-  import { getNameListApi, getRemainNameListApi } from '/@/api/collection/collection';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
   const visible = ref(false);
-  const newNameString = ref('名称1\n名称2\n名称3');
+  const newNameString = ref(t('view.detail.nameList.nameList'));
   const props = defineProps({
     nameList: Array,
     remainNameList: Array,
   });
-  const nameList = ref([] as any[]);
-  const remainNameList = ref([] as any[]);
 
-  function addRemainName(index: any) {
-    nameList.value.push(remainNameList.value.at(index));
-    remainNameList.value.splice(index, 1);
-  }
-
-  const addNameList = (e: MouseEvent) => {
-    const newNameList = newNameString.value.split('\n');
-    nameList.value = nameList.value.concat(newNameList);
-    newNameString.value = '';
-    visible.value = false;
-  };
-
-  // watch(
-  //   () => nameList.value,
-  //   async (nameListValue) => {
-  //     await putNameListApi(props.collectionId, nameListValue);
-  //   },
-  // );
+  // const nameList = props.nameList;
+  // const remainNameList = props.remainNameList;
 </script>
 
 <style scoped lang="less">
@@ -62,7 +65,12 @@
   .add_name_col {
     text-align: center;
     padding: 3px;
-    background-color: @secondary-gray-color;
+    background-color: #b8cbe0;
     width: 100%;
+  }
+  .icon-wrapper {
+    position: absolute;
+    top: 0px;
+    right: 0px;
   }
 </style>

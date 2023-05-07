@@ -1,22 +1,27 @@
 <template>
   <div>
-    <a type="primary" @click="showModal">查看</a>
-    <a-modal centered v-model:visible="visible" title="提交记录" @ok="handleOk">
-      <div style="padding: 10px; font-size: 15px">2022年10月24日 09:05 提交了 1 个文件</div>
+    <a type="primary" @click="showModal">{{ t('view.detail.record.viewButton') }}</a>
+    <a-modal
+      centered
+      v-model:visible="visible"
+      :title="t('view.detail.record.submissionRecord')"
+      @ok="handleOk"
+    >
+      <!--      <div style="padding: 10px; font-size: 15px">2022年10月24日 09:05 提交了 1 个文件</div>-->
       <div>
         <div class="record">
           <SvgIcon name="questionnaire" />
-          <div>问卷</div>
+          <div>{{ t('view.detail.record.surveyType') }}</div>
           <QuestionnairePreview
             style="position: absolute; right: 5px"
             :submissionId="submissionId"
           />
         </div>
-        <div class="record">
-          <SvgIcon name="file" />
-          <div>文件</div>
-          <a><caret-down-outlined /></a>
-        </div>
+        <!--        <div class="record">-->
+        <!--          <SvgIcon name="file" />-->
+        <!--          <div>{{ t('view.detail.record.fileType') }}</div>-->
+        <!--          <a><caret-down-outlined /></a>-->
+        <!--        </div>-->
       </div>
 
       <!--      <div style="position: relative;height: 30px">-->
@@ -36,6 +41,9 @@
   import { SvgIcon } from '/@/components/Icon';
   import { CaretDownOutlined } from '@ant-design/icons-vue';
   import QuestionnairePreview from '/@/views/collection-detail/component/QuestionnairePreview.vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const props = defineProps({
     submissionId: String,

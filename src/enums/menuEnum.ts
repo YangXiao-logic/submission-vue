@@ -2,14 +2,14 @@
  * @description: menu type
  */
 export enum MenuTypeEnum {
+  // top menu
+  TOP_MENU = 'top-menu',
   // left menu
   SIDEBAR = 'sidebar',
 
   MIX_SIDEBAR = 'mix-sidebar',
   // mixin menu
   MIX = 'mix',
-  // top menu
-  TOP_MENU = 'top-menu',
 }
 
 // 折叠触发器位置
@@ -26,8 +26,9 @@ export type Mode = 'vertical' | 'vertical-right' | 'horizontal' | 'inline';
 
 // menu mode
 export enum MenuModeEnum {
-  VERTICAL = 'vertical',
   HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical',
+
   VERTICAL_RIGHT = 'vertical-right',
   INLINE = 'inline',
 }

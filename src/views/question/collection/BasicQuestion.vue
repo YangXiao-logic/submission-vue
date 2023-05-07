@@ -9,14 +9,14 @@
       >
         <question-circle-outlined class="question-icon" />
       </a-tooltip>
+      <!--      :rules="rules"-->
+      <!--      :name="['questionList', 'name']"-->
       <a-form-item
         :label="question.questionOrder"
-        :rules="rules"
-        :name="['questionList', 'name']"
-        :required="true"
+        :rules="[{ required: true, message: 'Please input question name!' }]"
         style="margin-bottom: 0px"
       >
-        <div v-if="question.type === QuestionType.NAME">{{ question.name }}</div>
+        <div v-if="question.type === QuestionType.NAME"> {{ question.name }}</div>
         <a-input
           v-else
           v-model:value="question.name"
@@ -36,6 +36,7 @@
         <SingleFileAttachment
           disabled="true"
           :fileRenamePatternList="question.fileRenamePatternList"
+          @change-rename-pattern="changeRenamePattern"
         />
       </div>
       <div v-else-if="question.type === QuestionType.SIMPLE_TEXT_INPUT">
@@ -87,7 +88,7 @@
   import { Rule } from 'ant-design-vue/es/form';
 
   const { t } = useI18n();
-  defineProps({
+  const props = defineProps({
     question: {
       type: Object,
       required: true,
@@ -111,18 +112,25 @@
     return countMap;
   });
 
-  // Validate Rule: Question Name can not be equal.
-  let validateRepeat = async (_rule: Rule, value: string) => {
-    if (nameDict[value] && nameDict[value] >= 2) {
-      return Promise.reject('Each question must have a distinct title.');
-    } else {
-      return Promise.resolve();
-    }
+  const changeRenamePattern = (patternList) => {
+    console.log(patternList);
+    props.question.fileRenamePatternList = patternList.map((item, index) => {
+      return { tempQuestionId: item.tempQuestionId, patternOrder: index + 1 };
+    });
   };
-  const rules: Rule[] = [
-    { required: true, message: 'Please input question name!' },
-    { required: true, validator: validateRepeat, trigger: 'change' },
-  ];
+
+  // Validate Rule: Question Name can not be equal.
+  // let validateRepeat = async (_rule: Rule, value: string) => {
+  //   if (nameDict[value] && nameDict[value] >= 2) {
+  //     return Promise.reject('Each question must have a distinct title.');
+  //   } else {
+  //     return Promise.resolve();
+  //   }
+  // };
+  // const rules: Rule[] = [
+  //   { required: true, message: 'Please input question name!' },
+  //   { required: true, validator: validateRepeat, trigger: 'change' },
+  // ];
 </script>
 
 <style scoped>

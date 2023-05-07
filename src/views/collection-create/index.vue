@@ -47,6 +47,7 @@
         required: true,
       },
       {
+        tempQuestionId: '1',
         questionOrder: 2,
         name: t('view.create.default.fileQuestion'),
         description: '',
@@ -61,6 +62,8 @@
       },
     ],
   });
+
+  console.log(collectionForm.value.questionList);
 
   async function addCollection() {
     try {

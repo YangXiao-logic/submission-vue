@@ -9,13 +9,16 @@
   >
     <!--    <p>{{ link }}</p>-->
     <a-input :value="link" style="margin: 10px; border-radius: 3px" />
-    <a-button @click="copyLink" style="margin: 10px"> 复制链接</a-button>
+    <a-button @click="copyLink" style="margin: 10px"> {{ t('view.home.modal.share') }}</a-button>
   </a-modal>
 </template>
 
 <script setup>
   import { watchEffect, ref } from 'vue';
   import { message, Modal } from 'ant-design-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const props = defineProps({
     collectionId: String,

@@ -1,12 +1,12 @@
 <template>
   <a-button type="dashed" block @click="showModal">
     <PlusOutlined />
-    Add QuestionType
+    {{ t('view.create.typeModal.newQuestion') }}
   </a-button>
   <a-modal
     centered
     v-model:visible="visible"
-    title="添加题目"
+    :title="t('view.create.typeModal.newQuestion')"
     style="text-align: center"
     ok-text=""
     cancel-text=""
@@ -32,6 +32,10 @@
 <script setup lang="ts">
   import { defineComponent, ref } from 'vue';
   import { QuestionType } from '/@/views/question/question-type/QuestionType';
+  import { PlusOutlined } from '@ant-design/icons-vue';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
   const emits = defineEmits(['addQuestion']);
   const visible = ref<boolean>(false);
   const showModal = () => {
@@ -39,27 +43,23 @@
   };
   const questionTypeList = [
     {
-      name: '智能名单',
+      name: t('view.create.typeModal.name'),
       type: QuestionType.NAME,
     },
     {
-      name: '简单问答题',
+      name: t('view.create.typeModal.simple'),
       type: QuestionType.SIMPLE_TEXT_INPUT,
     },
     {
-      name: '富文本类问答题',
-      type: QuestionType.RICH_TEXT_INPUT,
-    },
-    {
-      name: '文件附件',
+      name: t('view.create.typeModal.file'),
       type: QuestionType.FILE_ATTACHMENT,
     },
     {
-      name: '单选题',
+      name: t('view.create.typeModal.single'),
       type: QuestionType.SINGLE_CHOICE,
     },
     {
-      name: '多选题',
+      name: t('view.create.typeModal.multi'),
       type: QuestionType.MULTIPLY_CHOICE,
     },
   ];

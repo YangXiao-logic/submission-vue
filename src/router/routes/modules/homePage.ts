@@ -11,7 +11,7 @@ const collect: AppRouteModule = {
   meta: {
     hideChildrenInMenu: true,
     icon: 'simple-icons:about-dot-me',
-    title: '首页',
+    title: t('routes.routes.home'),
     orderNo: 0,
   },
   children: [
@@ -20,7 +20,7 @@ const collect: AppRouteModule = {
       name: 'HomePageIndex',
       component: () => import('/@/views/home-page/index.vue'),
       meta: {
-        title: '首页',
+        title: t('routes.routes.home'),
         icon: 'simple-icons:about-dot-me',
         hideMenu: true,
       },

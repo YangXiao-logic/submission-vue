@@ -10,6 +10,7 @@ export default {
     paperDescription: 'Create a paper and support grading',
   },
   list: {
+    list: 'Collection List',
     share: 'Share',
     edit: 'Edit',
     detail: 'Details',
@@ -25,5 +26,11 @@ export default {
     submissionCount: 'Number of Submissions',
     closeTime: 'Closing Time',
     operation: 'Operation',
+  },
+  modal: {
+    deleteCollection: 'Delete Collection',
+    sureDelete:
+      'Are you sure you want to delete it? All submissions will also be deleted and cannot be recovered.',
+    share: 'Copy Link',
   },
 };

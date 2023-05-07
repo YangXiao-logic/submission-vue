@@ -1,8 +1,8 @@
 <template>
   <a-layout>
-    <a-layout-header>
-      <Header />
-    </a-layout-header>
+    <!--    <a-layout-header style="background-color: white">-->
+    <Header />
+    <!--    </a-layout-header>-->
     <a-layout-content>
       <Content />
     </a-layout-content>

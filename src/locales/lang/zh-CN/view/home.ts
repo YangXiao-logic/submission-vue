@@ -9,6 +9,7 @@ export default {
     paperDescription: '创建试卷，并支持打分',
   },
   list: {
+    list: '收集列表',
     share: '分享',
     edit: '编辑',
     detail: '详情',
@@ -24,5 +25,10 @@ export default {
     submissionCount: '提交人数',
     closeTime: '截止时间',
     operation: '操作',
+  },
+  modal: {
+    deleteCollection: '删除收集',
+    sureDelete: '你确定要删除吗？删除后所有的提交也会被删除，并且无法恢复。',
+    share: '复制链接',
   },
 };

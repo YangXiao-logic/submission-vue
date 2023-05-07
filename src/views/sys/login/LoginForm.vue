@@ -45,7 +45,14 @@
     </ARow>
 
     <FormItem class="enter-x">
-      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
+      <Button
+        id="loginButton"
+        type="primary"
+        size="large"
+        block
+        @click="handleLogin"
+        :loading="loading"
+      >
         {{ t('sys.login.loginButton') }}
       </Button>
       <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">

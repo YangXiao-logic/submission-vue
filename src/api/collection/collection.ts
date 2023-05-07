@@ -66,28 +66,42 @@ export function getCollectionDetailApi(collectionId) {
   });
 }
 
-export function getNameListApi(collectionId) {
-  return defHttp.get({
-    url: '/collections/' + collectionId + '/names',
-  });
-}
+// export function getNameListApi(collectionId) {
+//   return defHttp.get({
+//     url: '/collections/' + collectionId + '/names',
+//   });
+// }
 
-export function getRemainNameListApi(collectionId) {
-  return defHttp.get({
-    url: '/collections/' + collectionId + '/remain-names',
-  });
-}
+// export function getRemainNameListApi(collectionId) {
+//   return defHttp.get({
+//     url: '/collections/' + collectionId + '/remain-names',
+//   });
+// }
 
 export function addNameListApi(collectionId, params) {
   return defHttp.post({
-    url: '/collections/' + collectionId + '/name-list',
-    params: params,
+    url: '/collections/' + collectionId + '/name/add-list',
+    data: params,
   });
 }
 
-export function addNameApi(collectionId, nameId) {
+export function addNameApi(collectionId, params) {
   return defHttp.post({
-    url: '/collections/' + collectionId + '/name-list',
-    params: nameId,
+    url: '/collections/' + collectionId + '/name/add/',
+    data: params,
   });
 }
+
+export function deleteNameApi(collectionId, params) {
+  return defHttp.post({
+    url: '/collections/' + collectionId + '/name/delete/',
+    data: params,
+  });
+}
+
+// export function addNameApi(collectionId, nameId) {
+//   return defHttp.post({
+//     url: '/collections/' + collectionId + '/name-list',
+//     params: nameId,
+//   });
+// }

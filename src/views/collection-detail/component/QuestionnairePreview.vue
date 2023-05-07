@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a type="primary" @click="showModal">预览</a>
+    <a type="primary" @click="showModal">{{ t('view.detail.preview.previewButton') }}</a>
     <a-modal centered v-model:visible="visible" @ok="handleOk">
       <div style="padding: 20px">
         <div style="padding: 5px" v-for="answer in answerList">
@@ -20,6 +20,9 @@
   import { SvgIcon } from '/@/components/Icon';
   import { CaretDownOutlined } from '@ant-design/icons-vue';
   import { getSubmissionAnswerApi } from '/@/api/collection/submission';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const props = defineProps({
     submissionId: String,

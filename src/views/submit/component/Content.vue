@@ -1,18 +1,26 @@
 <template>
   <div class="bg-color" style="display: flex; justify-content: center">
-    <div direction="vertical" style="width: 60%; position: relative" class="content">
+    <div
+      direction="vertical"
+      style="width: 60%; position: relative; margin-top: 30px"
+      class="content"
+    >
       <div style="font-size: 40px; text-align: center">{{ collection.title }}</div>
       <div style="padding: 3%">{{ collection.description }}</div>
-      <a-row :gutter="20" justify="space-between">
+      <a-row :gutter="20" style="margin: 10px">
         <a-col>
-          <div class="border-class">收集者：{{ collection.collectorName }}</div>
+          <div class="border-class"
+            >{{ t('view.submit.collector') }} {{ collection.collectorName }}</div
+          >
         </a-col>
         <a-col>
-          <div class="border-class">截止时间：{{ collection.closeTime }}</div>
+          <div class="border-class"
+            >{{ t('view.submit.closeTime') }} {{ collection.closeTime }}</div
+          >
         </a-col>
       </a-row>
 
-      <a-form :model="collection.questionList">
+      <a-form :model="collection.questionList" layout="vertical">
         <a-row>
           <!--          using a-col to order question-->
           <a-col
@@ -34,7 +42,9 @@
         <a-divider style="height: 1px; background-color: gray" />
         <a-row :gutter="20" justify="center">
           <a-col :span="5">
-            <a-button style="width: 100%" type="primary" @click="submit">提交</a-button>
+            <a-button style="width: 100%" type="primary" @click="submit">{{
+              t('view.submit.submit')
+            }}</a-button>
           </a-col>
         </a-row>
       </div>
@@ -49,6 +59,9 @@
   import { getCollectionApi } from '/@/api/collection/collection';
   import { Collection } from '/#/collection';
   import { Answer } from '/#/submission';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const BasicQuestion = defineAsyncComponent(
     () => import('/@/views/question/submission/BasicQuestion.vue'),
@@ -119,7 +132,10 @@
   }
 
   .border-class {
+    background-color: #c2cedc;
+    font-size: large;
     //border: 1px solid #1a1a1a;
-    //border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
   }
 </style>

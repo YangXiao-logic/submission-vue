@@ -27,4 +27,12 @@ export default {
     renameWord: 'The file will be renamed as follows:',
     uploadWay: 'Click or drag and drop to upload',
   },
+  typeModal: {
+    newQuestion: 'Add new Question',
+    name: 'Smart Name',
+    simple: 'Simple Input',
+    file: 'File Attachment',
+    single: 'Single Option',
+    multi: 'Multiply Option',
+  },
 };

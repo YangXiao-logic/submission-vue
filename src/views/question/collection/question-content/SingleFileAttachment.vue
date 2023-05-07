@@ -14,7 +14,7 @@
       v-model:value="value"
       :options="options"
       mode="multiple"
-      @change="changeRenamePattern"
+      @change="$emit('changeRenamePattern', patternList)"
     >
       <!--      <a-select-option v-for="questionName in questionNameList" :value="questionName.name">-->
       <!--        {{ questionName.name }}-->
@@ -52,6 +52,7 @@
       const questionName = questionNameList.value.find(
         (question) => question.tempQuestionId == item.tempQuestionId,
       );
+      console.log(questionName.tempQuestionId);
       return { value: questionName.tempQuestionId, label: questionName.name };
     });
   });

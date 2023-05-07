@@ -156,6 +156,33 @@ export class VAxios {
     });
   }
 
+  myUploadFile<T = any>(config: AxiosRequestConfig, params) {
+    const formData = new window.FormData();
+    if (params) {
+      Object.keys(params).forEach((key) => {
+        const value = params![key];
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            formData.append(`${key}[]`, item);
+          });
+          return;
+        }
+
+        formData.append(key, params![key]);
+      });
+    }
+    return this.axiosInstance.request<T>({
+      ...config,
+      method: 'POST',
+      data: formData,
+      headers: {
+        'Content-type': ContentTypeEnum.FORM_DATA,
+        // @ts-ignore
+        ignoreCancelToken: true,
+      },
+    });
+  }
+
   // support form-data
   supportFormData(config: AxiosRequestConfig) {
     const headers = config.headers || this.options.headers;

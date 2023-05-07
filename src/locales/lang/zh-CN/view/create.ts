@@ -27,4 +27,12 @@ export default {
     renameWord: '文件将被重新命名为格式:',
     uploadWay: '点击或拖拽上传',
   },
+  typeModal: {
+    newQuestion: '添加新问题',
+    name: '智能名单',
+    simple: '简单问答题',
+    file: '文件附件',
+    single: '单选题',
+    multi: '多选题',
+  },
 };

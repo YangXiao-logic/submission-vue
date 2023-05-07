@@ -67,7 +67,7 @@
 
 <style scoped lang="less">
   .collect-card {
-    background-color: @secondary-gray-color;
+    background-color: #c2cedc;
     height: 130px;
     position: relative;
   }

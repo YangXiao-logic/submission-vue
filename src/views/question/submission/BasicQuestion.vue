@@ -1,49 +1,40 @@
 <template>
   <a-row :gutter="20" justify="space-between">
     <a-col :span="24">
-      <div>
-        <span>*</span>
-        <span style="margin-right: 15px">{{ questionData.questionOrder }}:</span>
-        <span>{{ questionData.name }}</span>
-      </div>
-      <!--      <a-form-item-->
-      <!--        :label="questionData.questionOrder"-->
-      <!--        :rules="[{ required: true, message: 'Please input question name!' }]"-->
-      <!--        style="margin-bottom: 0px"-->
-      <!--      >-->
-      <!--        <a-input v-model:value="questionData.name" :bordered="false" :disabled="true" />-->
-      <!--      </a-form-item>-->
-      <!--    </div>-->
-      <div>
-        <span>{{ questionData.description }}</span>
-      </div>
-      <!--      <a-form-item style="margin-bottom: 0px">-->
-      <!--        <a-input-->
-      <!--          v-model:value="questionData.description"-->
-      <!--          :bordered="false"-->
-      <!--          placeholder="添加题目描述"-->
-      <!--        />-->
-      <!--      </a-form-item>-->
-      <div v-if="questionData.type === QuestionType.FILE_ATTACHMENT">
-        <FileAttachment
-          :fileRenamePatternList="questionData.fileRenamePatternList"
-          :questionId="questionData.questionId"
-        />
-      </div>
-      <div
-        v-else-if="
-          questionData.type === QuestionType.SIMPLE_TEXT_INPUT ||
-          questionData.type === QuestionType.NAME
-        "
+      <a-form-item
+        :label="questionData.questionOrder + '. ' + questionData.name"
+        :required="questionData.required"
       >
-        <a-input placeholder="请输入回答" v-model:value="answer.answerContent[0]" />
-      </div>
-      <div v-else-if="questionData.type === QuestionType.SINGLE_CHOICE">
-        <SingleChoice :optionList="questionData.optionList" :answerContent="answer.answerContent" />
-      </div>
-      <div v-else-if="questionData.type === QuestionType.MULTIPLY_CHOICE">
-        <MutiChoice :optionList="questionData.optionList" :answerContent="answer.answerContent" />
-      </div>
+        <div>
+          <span>{{ questionData.description }}</span>
+        </div>
+        <div v-if="questionData.type === QuestionType.FILE_ATTACHMENT">
+          <FileAttachment
+            :fileRenamePatternList="questionData.fileRenamePatternList"
+            :questionId="questionData.questionId"
+          />
+        </div>
+        <div
+          v-else-if="
+            questionData.type === QuestionType.SIMPLE_TEXT_INPUT ||
+            questionData.type === QuestionType.NAME
+          "
+        >
+          <a-input
+            :placeholder="t('view.submit.pleaseInput')"
+            v-model:value="answer.answerContent[0]"
+          />
+        </div>
+        <div v-else-if="questionData.type === QuestionType.SINGLE_CHOICE">
+          <SingleChoice
+            :optionList="questionData.optionList"
+            :answerContent="answer.answerContent"
+          />
+        </div>
+        <div v-else-if="questionData.type === QuestionType.MULTIPLY_CHOICE">
+          <MutiChoice :optionList="questionData.optionList" :answerContent="answer.answerContent" />
+        </div>
+      </a-form-item>
     </a-col>
   </a-row>
 </template>
@@ -53,7 +44,10 @@
   import FileAttachment from '/@/views/question/submission/question-content/FileAttachment.vue';
   import SingleChoice from '/@/views/question/submission/question-content/SingleChoice.vue';
   import MutiChoice from '/@/views/question/submission/question-content/MutiChoice.vue';
-  defineProps({
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
+  const props = defineProps({
     questionData: {
       type: Object,
       required: true,

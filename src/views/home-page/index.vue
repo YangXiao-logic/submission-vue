@@ -5,24 +5,24 @@
         t('view.home.create.collection')
       }}</div>
       <a-row :gutter="12">
-        <a-col :span="8">
-          <CreateCard
-            :title="t('view.home.create.file')"
-            :description="t('view.home.create.fileDescription')"
-          />
-        </a-col>
+        <!--        <a-col :span="8">-->
+        <!--          <CreateCard-->
+        <!--            :title="t('view.home.create.file')"-->
+        <!--            :description="t('view.home.create.fileDescription')"-->
+        <!--          />-->
+        <!--        </a-col>-->
         <a-col :span="8">
           <CreateCard
             :title="t('view.home.create.questionnaire')"
             :description="t('view.home.create.questionnaireDescription')"
           />
         </a-col>
-        <a-col :span="8">
-          <CreateCard
-            :title="t('view.home.create.paper')"
-            :description="t('view.home.create.paperDescription')"
-          />
-        </a-col>
+        <!--        <a-col :span="8">-->
+        <!--          <CreateCard-->
+        <!--            :title="t('view.home.create.paper')"-->
+        <!--            :description="t('view.home.create.paperDescription')"-->
+        <!--          />-->
+        <!--        </a-col>-->
       </a-row>
     </div>
     <div class="content">

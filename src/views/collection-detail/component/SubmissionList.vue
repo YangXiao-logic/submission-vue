@@ -1,5 +1,5 @@
 <template>
-  <a-button @click="downloadFile">一键下载</a-button>
+  <a-button @click="downloadFile">{{ t('view.detail.list.downloadFile') }}</a-button>
   <a-table :columns="columns" :data-source="submissionList" :scroll="{ x: 1500, y: 300 }">
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'operation'">
@@ -11,18 +11,25 @@
 
 <script setup lang="ts">
   import type { TableColumnsType } from 'ant-design-vue';
-  import { defineComponent, ref } from 'vue';
+  import { defineComponent, defineProps, ref } from 'vue';
   import RecordDetail from '/@/views/collection-detail/component/RecordDetail.vue';
   import { useRoute } from 'vue-router';
   import { getSubmissionListApi } from '/@/api/collection/submission';
   import axios, { AxiosRequestConfig } from 'axios';
   import fs from 'fs';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
+
+  const props = defineProps({
+    collectionTitle: String,
+  });
 
   const columns: TableColumnsType = [
-    { title: '姓名', width: 20, dataIndex: 'name', key: 'name' },
-    { title: '提交时间', dataIndex: 'submitTime', key: '1', width: 30 },
+    { title: t('view.detail.list.name'), width: 20, dataIndex: 'name', key: 'name' },
+    { title: t('view.detail.list.submitTime'), dataIndex: 'submitTime', key: '1', width: 30 },
     {
-      title: '文件详情',
+      title: t('view.detail.list.detail'),
       key: 'operation',
       width: 50,
     },
@@ -42,7 +49,7 @@
       submissionList.value.push({
         submissionId: response[i].submissionId,
         name: response[i].name,
-        submitTime: `London Park no. ${i}`,
+        submitTime: response[i].submitTime,
       });
     }
   };
@@ -70,7 +77,7 @@
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'oss.zip';
+        link.download = props.collectionTitle + '.zip';
         document.body.appendChild(link);
         link.click();
         // console.log(response);

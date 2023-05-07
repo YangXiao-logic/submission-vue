@@ -4,6 +4,7 @@
 import type { ProjectConfig } from '/#/config';
 
 import { PROJ_CFG_KEY } from '/@/enums/cacheEnum';
+import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
 import projectSetting from '/@/settings/projectSetting';
 
 import { updateHeaderBgColor, updateSidebarBgColor } from '/@/logics/theme/updateBackground';
@@ -47,6 +48,8 @@ export function initAppConfigStore() {
   } catch (error) {
     console.log(error);
   }
+  projCfg.menuSetting.mode = MenuModeEnum.HORIZONTAL;
+  projCfg.menuSetting.type = MenuTypeEnum.TOP_MENU;
   appStore.setProjectConfig(projCfg);
 
   // init dark mode

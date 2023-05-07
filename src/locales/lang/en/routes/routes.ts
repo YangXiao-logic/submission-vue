@@ -1,5 +1,7 @@
 export default {
   create: 'Create Collection',
-  list: 'Collect List',
+  list: 'Collection List',
   home: 'Home',
+  detail: 'Collection Detail',
+  edit: 'Collection Edit',
 };

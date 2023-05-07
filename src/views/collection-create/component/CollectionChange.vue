@@ -2,54 +2,47 @@
   <PageWrapper>
     <a-form :model="collectionForm" style="display: flex; justify-content: center">
       <a-space direction="vertical" style="width: 70%" class="content">
-        <a-form-item>
+        <!--        :rules="[{ required: true, message: 'Please input collection title!' }]"-->
+        <a-form-item name="collectionTitle">
           <!--                     :rules="[{ required: true, message: 'Please input your username!' }]"-->
           <a-input
-            required="true"
             class="question_form__name"
             v-model:value="collectionForm.title"
             :bordered="false"
-            placeholder="收集题目"
+            :placeholder="t('view.create.collectionTitle')"
             style="font-size: 40px; text-align: center"
           />
         </a-form-item>
         <a-row :gutter="24">
           <a-col :span="6">
             <a-form-item
-              label="收集者"
+              :label="t('view.create.collector')"
               :rules="[{ required: true, message: 'Please input collector name!' }]"
+              name="collectorName"
             >
               <a-input
                 v-model:value="collectionForm.collectorName"
-                placeholder="负责人"
+                :placeholder="t('view.create.collector')"
                 :bordered="false"
               />
             </a-form-item>
           </a-col>
           <a-col :span="9">
-            <a-form-item label="发布时间" required>
-              <a-date-picker
-                v-model:value="collectionForm.releaseTime"
-                show-time
-                placeholder="发布时间"
-              />
+            <a-form-item :label="t('view.create.releaseTime')" required>
+              <a-date-picker v-model:value="collectionForm.releaseTime" show-time />
             </a-form-item>
           </a-col>
           <a-col :span="9">
-            <a-form-item label="截止时间" required>
-              <a-date-picker
-                v-model:value="collectionForm.closeTime"
-                show-time
-                placeholder="截止时间"
-              />
+            <a-form-item :label="t('view.create.closeTime')" required>
+              <a-date-picker v-model:value="collectionForm.closeTime" show-time />
             </a-form-item>
           </a-col>
         </a-row>
         <a-form-item style="padding: 15px">
-          <a-typography-title :level="4">描述</a-typography-title>
+          <a-typography-title :level="4">{{ t('view.create.description') }}</a-typography-title>
           <a-textarea
             v-model:value="collectionForm.description"
-            placeholder="描述收集"
+            :placeholder="t('view.create.collectionDescription')"
             :rows="5"
             allow-clear
           />
@@ -91,6 +84,9 @@
   import { useRoute } from 'vue-router';
   import dayjs from 'dayjs';
   import { buildShortUUID } from '/@/utils/uuid';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const props = defineProps({
     collectionForm: {
@@ -128,11 +124,11 @@
       optionList: [],
       tempQuestionId: buildShortUUID(),
     };
+    console.log(newQuestion);
     if (questionType.type === QuestionType.NAME) {
       newQuestion.name = '姓名';
     }
     props.collectionForm.questionList.push(newQuestion);
-    console.log(props.collectionForm.questionList.length);
   };
 
   const questionNameList = computed(() => {

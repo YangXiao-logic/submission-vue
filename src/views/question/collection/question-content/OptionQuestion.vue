@@ -11,7 +11,7 @@
     />
   </div>
   <a-button @click="optionList.push('')"
-    ><template #icon><plus-circle-outlined /></template>添加选项</a-button
+    ><template #icon><plus-circle-outlined /></template>New Option</a-button
   >
 </template>
 

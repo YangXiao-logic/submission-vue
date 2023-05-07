@@ -26,3 +26,12 @@ export function getPolicyApi() {
     url: '/aliyun/oss/policy',
   });
 }
+
+export function myUploadApi(params) {
+  return defHttp.myUploadFile(
+    {
+      url: 'https://submission.oss-cn-chengdu.aliyuncs.com',
+    },
+    params,
+  );
+}
